@@ -1120,9 +1120,9 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
           <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="methodology">Copy embed code</button><button type="button" class="an-ek-btn" data-png="methodology">Download PNG</button></div>
         </div>
         <div class="an-ek">
-          <h3>The Full Index</h3>
-          <p>The complete interactive page, every section from hero to methodology.</p>
-          <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="full">Copy embed code</button></div>
+          <h3>The Headline Card</h3>
+          <p>The intro in one compact embed: the masthead, the headline numbers, and No. 1 California with its odds.</p>
+          <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="hero">Copy embed code</button></div>
         </div>
       </div>
       <p class="an-ek-note">Questions or custom sizes: contact the Action Network content team.</p>
@@ -1937,7 +1937,7 @@ const AN_EMBEDS = {
   leaderboards:{id:'sec-fireballs',  h:900,  title:'The Leaderboards'},
   capitals:    {id:'sec-meteorites', h:900,  title:'America&#39;s Meteorite Capitals'},
   methodology: {id:'sec-method',     h:1000, title:'Methodology'},
-  full:        {id:null,             h:4200, title:'The 2026 Asteroid Spotting Index'}
+  hero:        {id:'sec-hero',       h:980,  title:'America&#39;s Best Places to Spot a Meteor'}
 };
 (function(){
   const key = new URLSearchParams(location.search).get('embed');
@@ -1959,7 +1959,7 @@ const AN_EMBEDS = {
 const AN_EMBED_BASE = 'https://gauthambc.github.io/action-network-meteors-spotting-odds/';
 function anEmbedSnippet(key){
   const cfg = AN_EMBEDS[key];
-  const url = AN_EMBED_BASE + (key === 'full' ? '' : '?embed=' + key);
+  const url = AN_EMBED_BASE + '?embed=' + key;
   const id = 'an-asi-' + key;
   /* iframe-only on purpose: most CMS sanitizers strip script tags, so embeds ship with a fixed height and no JS */
   return '<iframe id="' + id + '" src="' + url + '" width="100%" height="' + cfg.h + '" style="border:0;" frameborder="0" loading="lazy" title="' + cfg.title.replace(/&#39;/g, "'") + ' | Action Network 2026 Asteroid Spotting Index"></iframe>';
