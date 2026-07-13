@@ -139,7 +139,7 @@ body.an-embed .an-jump-nav{display:none;}
 @keyframes anRockFall{
   0%{opacity:0;transform:translate3d(0,0,0) rotate(var(--mrot,32deg));}
   8%{opacity:1;}
-  100%{opacity:0;transform:translate3d(var(--mx,60vw),var(--my,46vh),0) rotate(var(--mrot,32deg));}
+  100%{opacity:0;transform:translate3d(var(--mx,60vw),var(--my,37vw),0) rotate(var(--mrot,32deg));}
 }
 .an-meteor.rock.run,.an-meteor.lump.run{animation-name:anRockFall;}
 
@@ -202,7 +202,7 @@ body.an-embed .an-jump-nav{display:none;}
 @keyframes anMeteorFall{
   0%{opacity:0;transform:translate3d(0,0,0) rotate(var(--mrot,32deg)) scaleX(.4);}
   8%{opacity:1;}
-  100%{opacity:0;transform:translate3d(var(--mx,60vw),var(--my,46vh),0) rotate(var(--mrot,32deg)) scaleX(1);}
+  100%{opacity:0;transform:translate3d(var(--mx,60vw),var(--my,37vw),0) rotate(var(--mrot,32deg)) scaleX(1);}
 }
 .an-meteor.run{animation:anMeteorFall var(--mdur,1.7s) linear forwards;}
 
@@ -1206,7 +1206,7 @@ function launchMeteor(sky, opts){
   m.style.top = startY + '%';
   m.style.setProperty('--mrot', rot.toFixed(1)+'deg');
   m.style.setProperty('--mx', dist.toFixed(1)+'vw');
-  m.style.setProperty('--my', (dist*Math.tan(rot*Math.PI/180)).toFixed(1)+'vh');
+  m.style.setProperty('--my', (dist*Math.tan(rot*Math.PI/180)).toFixed(1)+'vw'); /* vw, not vh: in a tall auto-height iframe, vh explodes and meteors plummet vertically */
   const durS = (opts && opts.dur ? opts.dur : rnd(pf.dur[0], pf.dur[1]));
   m.style.setProperty('--mdur', durS.toFixed(2)+'s');
   sky.appendChild(m);
