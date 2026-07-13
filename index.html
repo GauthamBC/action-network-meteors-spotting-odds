@@ -84,6 +84,12 @@ body.an-embed .an-jump-nav{display:none;}
 .an-jump-link{flex:0 0 auto;border:1px solid var(--an-border);background:#fff;color:var(--an-text);font-family:var(--an-display);font-weight:700;font-size:15px;letter-spacing:.04em;padding:7px 14px;cursor:pointer;transition:all .18s ease;}
 .an-jump-link:hover{border-color:var(--an-green);color:var(--an-green-dark);}
 .an-jump-link.is-active{background:var(--an-navy);border-color:var(--an-navy);color:#fff;}
+.an-backtop{display:flex;align-items:center;gap:14px;margin-top:clamp(18px,2.4vw,28px);padding:0 clamp(16px,2.4vw,40px);}
+.an-backtop::before,.an-backtop::after{content:"";flex:1;height:1px;background:var(--an-border);}
+.an-backtop-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--an-border);background:#fff;color:var(--an-green-dark);font-family:var(--an-display);font-weight:700;font-size:14px;letter-spacing:.04em;padding:8px 16px;cursor:pointer;transition:all .15s ease;}
+.an-backtop-btn:hover{border-color:var(--an-green);background:var(--an-green-soft);}
+#sec-meteorites .an-backtop{margin:clamp(18px,2.4vw,28px) 0;}
+body.an-embed .an-backtop{display:none;}
 
 /* ============ HERO ============ */
 .an-band-dark{position:relative;background:
@@ -2304,6 +2310,23 @@ const secIO = new IntersectionObserver(entries=>{
 ['sec-hero','sec-rankings','sec-top10','sec-fireballs','sec-meteorites','sec-method','sec-embed'].forEach(id=>{
   const el = document.getElementById(id);
   if(el) secIO.observe(el);
+});
+/* ---------- back-to-menu separators after each section ---------- */
+function anBackToTop(){
+  const behavior = prefersReduced ? 'auto' : 'smooth';
+  if(document.documentElement.scrollHeight > window.innerHeight + 4){
+    window.scrollTo({top:0, behavior:behavior});
+  }
+  if(inFrame){ try { window.parent.postMessage({ an_jump: 0 }, '*'); } catch(e) {} }
+}
+['sec-findings','sec-rankings','sec-top10','sec-fireballs','sec-meteorites','sec-method'].forEach(id=>{
+  const sec = document.getElementById(id);
+  if(!sec) return;
+  const bar = document.createElement('div');
+  bar.className = 'an-backtop';
+  bar.innerHTML = '<button type="button" class="an-backtop-btn">Back to menu <span aria-hidden="true">&#9650;</span></button>';
+  bar.querySelector('button').addEventListener('click', anBackToTop);
+  sec.appendChild(bar);
 });
 </script>
 </body>
