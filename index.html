@@ -2313,11 +2313,12 @@ const secIO = new IntersectionObserver(entries=>{
 });
 /* ---------- back-to-menu separators after each section ---------- */
 function anBackToTop(){
-  const behavior = prefersReduced ? 'auto' : 'smooth';
-  if(document.documentElement.scrollHeight > window.innerHeight + 4){
-    window.scrollTo({top:0, behavior:behavior});
-  }
-  if(inFrame){ try { window.parent.postMessage({ an_jump: 0 }, '*'); } catch(e) {} }
+  /* reuse anJump: it scrolls internally when possible and falls back to
+     scrollIntoView, which browsers propagate to the parent page even from
+     a cross-origin iframe with no message listener */
+  const hero = document.getElementById('sec-hero');
+  if(hero){ anJump(hero); return; }
+  window.scrollTo({top:0, behavior: prefersReduced ? 'auto' : 'smooth'});
 }
 ['sec-findings','sec-rankings','sec-top10','sec-fireballs','sec-meteorites','sec-method'].forEach(id=>{
   const sec = document.getElementById(id);
