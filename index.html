@@ -1937,7 +1937,7 @@ function anJump(el){
     el.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
   }
   if(inFrame){
-    try { window.parent.postMessage({ an_jump: y }, '*'); } catch(e) {}
+    try { window.parent.postMessage({ an_jump: y, an_section: el.id || null }, '*'); } catch(e) {}
   }
   /* corrective pass: long smooth scrolls can settle off-target if layout shifted */
   clearTimeout(anJump._t);
@@ -1958,6 +1958,28 @@ if(window.ResizeObserver){
   let hT;
   new ResizeObserver(()=>{ clearTimeout(hT); hT = setTimeout(anPostHeight, 200); }).observe(document.body);
 }
+
+/* ---------- deep links: #sec-... works standalone and via the parent-page relay ---------- */
+const AN_JUMP_IDS = ['sec-hero','sec-findings','sec-rankings','sec-top10','sec-fireballs','sec-meteorites','sec-method','sec-embed'];
+function anGoto(id, isRetry){
+  if(document.body.classList.contains('an-embed')) return;   /* single-section embeds have nothing to jump to */
+  if(AN_JUMP_IDS.indexOf(id) === -1) return;                 /* whitelist: ignore anything else posted at us */
+  const el = document.getElementById(id);
+  if(!el) return;
+  anJump(el);
+  /* late layout (d3 map, fonts, images) shifts targets after load; settle once more */
+  if(!isRetry) setTimeout(()=>anGoto(id, true), 900);
+}
+function anOwnHash(){
+  const id = (location.hash || '').replace('#','');
+  if(id) anGoto(id);
+}
+window.addEventListener('hashchange', anOwnHash);
+window.addEventListener('load', ()=>setTimeout(anOwnHash, 350));
+window.addEventListener('message', (e)=>{
+  const d = e.data;
+  if(d && typeof d.an_goto === 'string') anGoto(d.an_goto.replace('#',''));
+});
 
 /* ---------- editors: embed mode, snippets, PNG export ---------- */
 const AN_EMBEDS = {
