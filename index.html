@@ -2151,7 +2151,7 @@ function anMapPNG(cfg, btn){
     ctx.font = "900 34px 'Barlow Condensed', 'Arial Narrow', sans-serif";
     ctx.textBaseline = 'alphabetic';
     ctx.textAlign = 'center';
-    ctx.fillText('The 2026 Asteroid Spotting Index', W / 2, 46);
+    ctx.fillText('The 2026 Meteor Spotting Index', W / 2, 46);
     ctx.textAlign = 'left';
     const isChoropleth = !!svg.querySelector('.an-state-shape');
     ctx.textAlign = 'center';
@@ -2191,7 +2191,7 @@ function anMapPNG(cfg, btn){
     /* source credit */
     ctx.fillStyle = 'rgba(255,255,255,.45)';
     ctx.font = "700 12px 'Barlow Condensed', 'Arial Narrow', sans-serif";
-    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 ASTEROID SPOTTING INDEX';
+    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 METEOR SPOTTING INDEX';
     ctx.fillText(credit, W - padX - ctx.measureText(credit).width, H - 18);
     URL.revokeObjectURL(url);
     anSaveBlob(c, cfg.file);
