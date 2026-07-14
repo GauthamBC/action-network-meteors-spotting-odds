@@ -90,6 +90,12 @@ body.an-embed .an-jump-nav{display:none;}
 .an-backtop-btn:hover{border-color:var(--an-green);background:var(--an-green-soft);}
 #sec-meteorites .an-backtop{margin:clamp(18px,2.4vw,28px) 0;}
 body.an-embed .an-backtop{display:none;}
+/* Clearance for the host page's sticky header: auto-height embeds can't
+   scroll internally, so jumps bubble to the parent via scrollIntoView,
+   which honors scroll-margin. Tune to the host header height. */
+#sec-hero,#sec-findings,#sec-rankings,#sec-top10,#sec-fireballs,
+#sec-meteorites,#sec-method,#sec-embed,
+.an-table-card{scroll-margin-top:76px;}
 
 /* ============ HERO ============ */
 .an-band-dark{position:relative;background:
@@ -333,7 +339,7 @@ body.an-exporting .an-kf-dia i{transition:none !important;transform:rotate(45deg
 .an-t10-name{margin:0;font-family:var(--an-display);font-weight:800;font-size:20px;line-height:1.1;color:var(--an-navy);}
 .an-t10 p{margin:0;font-size:14px;line-height:1.55;color:#3c464d;}
 .an-t10-facts{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
-.an-t10-facts li{border:1px solid var(--an-border);background:var(--an-bg2);padding:5px 11px;}
+.an-t10-facts li{flex:1 1 auto;border:1px solid var(--an-border);background:var(--an-bg2);padding:5px 11px;}
 .an-t10-facts b{display:block;font-family:var(--an-display);font-weight:800;font-size:13.5px;line-height:1.05;color:var(--an-navy);}
 .an-t10-facts span{display:block;font-family:var(--an-display);font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--an-muted);margin-top:2px;white-space:nowrap;}
 .an-t10-facts li.is-chance{background:var(--an-navy);border-color:var(--an-navy);}
@@ -1650,6 +1656,23 @@ const DSP_MAX = Math.max.apply(null, AN_STATES.map(x=>x.dsp));
       html += '<i class="' + (i < filled ? 'on' : '') + '" style="transition-delay:' + (i * 35) + 'ms"></i>';
     }
     el.innerHTML = html;
+  });
+})();
+/* Top 10 in Focus: add a clear-days chip from the table data */
+(function(){
+  const byName = {};
+  AN_STATES.forEach(s => byName[s.state] = s);
+  document.querySelectorAll('#sec-top10 .an-t10').forEach(card=>{
+    const nameEl = card.querySelector('.an-t10-name');
+    const s = nameEl && byName[nameEl.textContent.trim()];
+    if(!s) return;
+    const facts = card.querySelector('.an-t10-facts');
+    if(!facts || facts.querySelector('[data-clear]')) return;
+    const li = document.createElement('li');
+    li.setAttribute('data-clear','');
+    li.innerHTML = '<b>' + Math.round(s.clear) + '</b><span>Clear days / yr</span>';
+    /* insert after the Bortle chip: chance, odds, Bortle, then clear days */
+    facts.insertBefore(li, facts.children[3] || null);
   });
 })();
 function detailHTML(s){
