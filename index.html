@@ -1980,6 +1980,20 @@ window.addEventListener('message', (e)=>{
   const d = e.data;
   if(d && typeof d.an_goto === 'string') anGoto(d.an_goto.replace('#',''));
 });
+/* no-script host relay: read the parent page's query string from document.referrer.
+   Referrers carry path + query (never the #fragment) under the host's referrer
+   policy, so article links use ?goto=rankings instead of #sec-rankings. */
+(function(){
+  if(!inFrame || !document.referrer) return;
+  let want = '';
+  try {
+    const q = new URL(document.referrer).searchParams;
+    want = (q.get('goto') || q.get('section') || '').toLowerCase();
+  } catch(e){ return; }
+  if(!want) return;
+  const id = want.indexOf('sec-') === 0 ? want : 'sec-' + want;
+  window.addEventListener('load', ()=>setTimeout(()=>anGoto(id), 600));
+})();
 
 /* ---------- editors: embed mode, snippets, PNG export ---------- */
 const AN_EMBEDS = {
