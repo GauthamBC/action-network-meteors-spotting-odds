@@ -2414,15 +2414,22 @@ function anBackToTop(){
   bar.querySelector('button').addEventListener('click', anBackToTop);
   sec.appendChild(bar);
 });
-/* ---------- deep link: ?view=table lands writers on the full rankings table ---------- */
+/* ---------- deep links: ?view=table -> full rankings table; ?view=assets -> visual assets ---------- */
 (function(){
   const q = new URLSearchParams(location.search);
   if(q.get('embed')) return;
-  if((q.get('view') || '').toLowerCase() !== 'table') return;
-  setRankView(false);
-  if((q.get('rows') || '').toLowerCase() === 'all'){ tableCollapsed = false; renderTable(); }
+  const v = (q.get('view') || '').toLowerCase();
+  let targetId = null;
+  if(v === 'table'){
+    setRankView(false);
+    if((q.get('rows') || '').toLowerCase() === 'all'){ tableCollapsed = false; renderTable(); }
+    targetId = 'sec-rankings';
+  } else if(v === 'assets'){
+    targetId = 'sec-embed';
+  }
+  if(!targetId) return;
   window.addEventListener('load', ()=>{
-    setTimeout(()=>anJump(document.getElementById('sec-rankings')), 450);
+    setTimeout(()=>anJump(document.getElementById(targetId)), 450);
   }, {once:true});
 })();
 </script>
