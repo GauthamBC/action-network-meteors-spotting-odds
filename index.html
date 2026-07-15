@@ -76,6 +76,7 @@ body.an-exporting .an-meteor,body.an-exporting .an-ripple{display:none !importan
 .an-embed-credit{padding:9px clamp(16px,2.4vw,40px);font-family:var(--an-display);font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--an-muted);border-top:1px solid var(--an-border);background:#fff;}
 .an-embed-credit a{color:var(--an-green-dark);text-decoration:none;}
 body.an-embed .an-jump-nav{display:none;}
+body.an-embed .an-sec-head,body.an-embed .an-h2,body.an-embed .an-lede{display:none;}
 
 /* ============ JUMP NAV ============ */
 .an-jump-nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--an-border);}
@@ -1109,7 +1110,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
     <div class="an-wrap">
       <div class="an-sec-head"><span class="an-sec-kicker">For Editors</span></div>
       <h2 class="an-h2">Embed These Graphics</h2>
-      <p class="an-lede">Every visual on this page is available as a live, interactive embed or a high-resolution PNG. Each embed is a single iframe tag served from this same page, so there is nothing extra to host and no scripts for your CMS to strip. Embeds ship at a sensible fixed height, scroll internally if your column is narrow, and include a source credit.</p>
+      <p class="an-lede">Every visual on this page is available as a live, interactive embed or a high-resolution PNG. Each embed is a single iframe tag served from this same page, so there is nothing extra to host and no scripts for your CMS to strip. Embeds ship visuals-only, without the section&#8217;s intro text, at a sensible fixed height, scroll internally if your column is narrow, and include a source credit.</p>
       <div class="an-embedkit-grid">
         <div class="an-ek">
           <h3>Key Findings Cards</h3>
@@ -1950,11 +1951,11 @@ if(window.ResizeObserver){
 
 /* ---------- editors: embed mode, snippets, PNG export ---------- */
 const AN_EMBEDS = {
-  findings:    {id:'sec-findings',   h:1500, title:'Key Findings'},
-  rankings:    {id:'sec-rankings',   h:1050, title:'Strike Map and Rankings'},
-  leaderboards:{id:'sec-fireballs',  h:900,  title:'The Leaderboards'},
-  capitals:    {id:'sec-meteorites', h:900,  title:'America&#39;s Meteorite Capitals'},
-  methodology: {id:'sec-method',     h:1000, title:'Methodology'},
+  findings:    {id:'sec-findings',   h:1360, title:'Key Findings'},
+  rankings:    {id:'sec-rankings',   h:920,  title:'Strike Map and Rankings'},
+  leaderboards:{id:'sec-fireballs',  h:780,  title:'The Leaderboards'},
+  capitals:    {id:'sec-meteorites', h:760,  title:'America&#39;s Meteorite Capitals'},
+  methodology: {id:'sec-method',     h:880,  title:'Methodology'},
   hero:        {id:'sec-hero',       h:980,  title:'America&#39;s Best Places to Spot a Meteor'}
 };
 (function(){
