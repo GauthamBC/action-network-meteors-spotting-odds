@@ -43,12 +43,16 @@ a{color:var(--an-green-dark);}
 a:focus-visible,button:focus-visible{outline:3px solid var(--an-green);outline-offset:2px;}
 
 /* ============ EMBED KIT ============ */
-.an-embedkit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-@media(max-width:640px){.an-embedkit-grid{grid-template-columns:1fr;}}
+.an-embedkit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:760px){.an-embedkit-grid{grid-template-columns:1fr;}}
 .an-ek{background:#fff;border:1px solid var(--an-border);border-left:5px solid var(--an-green);box-shadow:var(--an-shadow);padding:14px 16px;}
 .an-ek h3{margin:0 0 4px;font-weight:800;font-size:18px;color:var(--an-navy);}
 .an-ek p{margin:0;font-family:var(--an-serif);font-size:13.5px;line-height:1.55;color:var(--an-muted);}
-.an-ek-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.an-ek-btns{display:flex;flex-wrap:nowrap;gap:8px;margin-top:12px;min-width:0;}
+@media(max-width:1150px) and (min-width:761px){
+  .an-ek-btn{font-size:12px;padding:7px 9px;letter-spacing:.02em;white-space:nowrap;}
+  .an-ek p{font-size:12.5px;}
+}
 .an-ek-btn{font-family:var(--an-display);font-weight:700;font-size:13.5px;letter-spacing:.04em;padding:8px 13px;border:1px solid var(--an-border-2);background:#fff;color:var(--an-text);cursor:pointer;transition:all .15s ease;}
 .an-ek-btn:hover{border-color:var(--an-green);color:var(--an-green-dark);}
 .an-ek-btn.primary{background:var(--an-navy);border-color:var(--an-navy);color:#fff;}
@@ -61,6 +65,26 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--an-green);outline-o
 .an-ek-menu button:last-child{border-bottom:0;}
 .an-ek-menu button:hover{background:var(--an-green-soft);color:var(--an-green-dark);}
 .an-ek-note{margin:16px 0 0;font-family:var(--an-serif);font-size:13px;color:var(--an-muted);}
+.an-press{margin:0 0 26px;}
+.an-quoteband{padding-top:clamp(24px,3vw,38px);padding-bottom:0;}
+.an-pull{max-width:880px;margin:0 auto;padding:6px 0 6px clamp(16px,2.4vw,26px);border-left:6px solid var(--an-green);}
+.an-pull blockquote{margin:0;}
+.an-pull blockquote p{margin:0;font-family:var(--an-serif);font-style:italic;font-size:clamp(16.5px,1.9vw,20px);line-height:1.65;color:var(--an-navy);}
+.an-pull figcaption{margin-top:11px;font-family:var(--an-display);font-weight:800;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--an-green-dark);display:flex;align-items:center;gap:8px;}
+.an-pull figcaption::before{content:"";width:8px;height:8px;background:var(--an-green);transform:rotate(45deg);flex:0 0 auto;}
+.an-press-h{margin:0 0 5px;font-weight:800;font-size:19px;color:var(--an-navy);}
+.an-press-lede{margin:0 0 14px;font-family:var(--an-serif);font-size:13.5px;line-height:1.6;color:var(--an-muted);max-width:none;}
+.an-press-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(5px,0.8vw,10px);}
+.an-press-item{position:relative;display:block;aspect-ratio:3/2;overflow:hidden;border:1px solid var(--an-border);background:var(--an-navy);}
+.an-press-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease,opacity .3s ease;}
+.an-press-item:hover img{transform:scale(1.04);opacity:.85;}
+.an-press-cap{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;background:linear-gradient(transparent,rgba(7,13,19,.9));color:#fff;font-family:var(--an-display);font-size:11px;line-height:1.35;opacity:0;transition:opacity .25s ease;}
+.an-press-item:hover .an-press-cap{opacity:1;}
+.an-press-cap b{display:block;font-weight:700;letter-spacing:.03em;}
+.an-press-cap i{display:block;font-style:normal;font-weight:600;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--an-green-bright);margin-top:2px;}
+.an-press-dl{position:absolute;top:8px;right:8px;background:var(--an-green-bright);color:var(--an-navy);font-family:var(--an-display);font-weight:800;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;opacity:0;transform:translateY(-4px);transition:all .2s ease;}
+.an-press-item:hover .an-press-dl{opacity:1;transform:none;}
+@media(hover:none){.an-press-cap,.an-press-dl{opacity:1;transform:none;}}
 .an-snap-pad{padding-bottom:64px !important;padding-top:10px !important;}
 .an-snap-frame{padding:46px 54px 60px !important;}
 .an-snap-pad-sm{padding-bottom:22px !important;}
@@ -558,19 +582,6 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
 <main class="an-page">
 
   <!-- ============ JUMP NAV ============ -->
-  <nav class="an-jump-nav" aria-label="Asteroid Spotting Index sections">
-    <div class="an-jump-track">
-      <span class="an-jump-label">Sections</span>
-      <button class="an-jump-link is-active" type="button" data-jump="sec-hero">Key Findings</button>
-      <button class="an-jump-link" type="button" data-jump="sec-rankings">All 50 States</button>
-      <button class="an-jump-link" type="button" data-jump="sec-top10">Top 10</button>
-      <button class="an-jump-link" type="button" data-jump="sec-fireballs">Leaderboards</button>
-      <button class="an-jump-link" type="button" data-jump="sec-meteorites">Meteorite Capitals</button>
-      <button class="an-jump-link" type="button" data-jump="sec-method">Methodology</button>
-      <button class="an-jump-link" type="button" data-jump="sec-embed">Embed</button>
-    </div>
-  </nav>
-
   <!-- ============ HERO ============ -->
   <section id="sec-hero" class="an-section" style="padding-top:0;">
     <div class="an-band-dark">
@@ -699,6 +710,29 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
   </section>
 
   <!-- ============ KEY FINDINGS ============ -->
+  <nav class="an-jump-nav" aria-label="Asteroid Spotting Index sections">
+    <div class="an-jump-track">
+      <span class="an-jump-label">Sections</span>
+      <button class="an-jump-link is-active" type="button" data-jump="sec-hero">Key Findings</button>
+      <button class="an-jump-link" type="button" data-jump="sec-rankings">All 50 States</button>
+      <button class="an-jump-link" type="button" data-jump="sec-top10">Top 10</button>
+      <button class="an-jump-link" type="button" data-jump="sec-fireballs">Leaderboards</button>
+      <button class="an-jump-link" type="button" data-jump="sec-meteorites">Meteorite Capitals</button>
+      <button class="an-jump-link" type="button" data-jump="sec-method">Methodology</button>
+      <button class="an-jump-link" type="button" data-jump="sec-embed">Assets</button>
+    </div>
+  </nav>
+
+  <section class="an-section an-quoteband" aria-label="Analyst quote">
+    <div class="an-wrap">
+      <figure class="an-pull">
+        <blockquote>
+          <p>&#8220;More Americans are planning travel around the night sky every year, and meteor showers are one of the great gateways. You don&#8217;t need a telescope, a ticket, or any experience: you just need to be in the right spot, and for most people the best sky of their lives is within a few hours&#8217; drive. That&#8217;s why our team wanted to make it simple: wherever you live, there&#8217;s a place within reach where the sky still gets truly dark, and this summer is the perfect excuse to find yours.&#8221;</p>
+        </blockquote>
+        <figcaption>Action Network analyst</figcaption>
+      </figure>
+    </div>
+  </section>
   <section id="sec-findings" class="an-section" style="padding-top:clamp(26px,3vw,40px);">
     <div class="an-wrap">
       <div class="an-sec-head"><span class="an-sec-kicker">Key Findings</span></div>
@@ -1109,12 +1143,19 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
   <section id="sec-embed" class="an-section alt">
     <div class="an-wrap">
       <div class="an-sec-head"><span class="an-sec-kicker">For Editors</span></div>
-      <h2 class="an-h2">Embed These Graphics</h2>
-      <p class="an-lede">Every visual on this page is available as a live, interactive embed or a high-resolution PNG. Each embed is a single iframe tag served from this same page, so there is nothing extra to host and no scripts for your CMS to strip. Embeds ship visuals-only, without the section&#8217;s intro text, at a sensible fixed height, scroll internally if your column is narrow, and include a source credit.</p>
+      <h2 class="an-h2">Visual Assets</h2>
+      <p class="an-lede">Photography, live interactive embeds, and high-resolution PNG graphics from the 2026 Asteroid Spotting Index, ready for editorial use.</p>
+      <div class="an-press" id="anPress" hidden>
+        <h3 class="an-press-h">Press Images</h3>
+        <p class="an-press-lede">High-resolution night-sky and fireball photographs cleared for editorial use alongside coverage of this index. Select any image to open the full-resolution file in a new tab, then save it directly. Please retain the credit shown with each image.</p>
+        <div class="an-press-grid" id="anPressGrid"></div>
+      </div>
+      <h3 class="an-press-h">Embeddable Graphics</h3>
+      <p class="an-press-lede">Every visual on this page is available as a live, interactive embed or a high-resolution PNG. Each embed is a single iframe tag, no scripts, so it survives any CMS, ships visuals-only, and includes a source credit.</p>
       <div class="an-embedkit-grid">
         <div class="an-ek">
           <h3>Key Findings Cards</h3>
-          <p>The five takeaways with animated fireball tallies, implied chances, and Action Network odds.</p>
+          <p>The five takeaways, with implied chances and Action Network odds.</p>
           <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="findings">Copy embed code</button><button type="button" class="an-ek-btn" data-png="findings">Download PNG</button></div>
         </div>
         <div class="an-ek">
@@ -1150,11 +1191,10 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
         </div>
         <div class="an-ek">
           <h3>The Headline Card</h3>
-          <p>The intro in one compact embed: the masthead, the headline numbers, and No. 1 California with its odds.</p>
+          <p>The intro in one compact embed: the headline numbers and No. 1 California.</p>
           <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="hero">Copy embed code</button><button type="button" class="an-ek-btn" data-png="hero">Download PNG</button></div>
         </div>
       </div>
-      <p class="an-ek-note">Questions or custom sizes: contact the Action Network content team.</p>
     </div>
   </section>
 
@@ -1973,6 +2013,33 @@ const AN_EMBEDS = {
   credit.innerHTML = 'Source: <a href="' + pageURL + '" target="_blank" rel="noopener">Action Network | The 2026 Asteroid Spotting Index</a>';
   target.parentNode.insertBefore(credit, target.nextSibling);
   setTimeout(anPostHeight, 300);
+})();
+
+/* ---------- press image gallery (populate AN_PRESS_IMAGES to activate) ---------- */
+const AN_PRESS_IMAGES = [
+  {full:'https://i.postimg.cc/KYJpwPy7/M7HEP8.jpg',  caption:'Perseid meteors over the moonlit landscape of Dinosaur Provincial Park, Alberta, Canada', credit:'Alan Dyer/Stocktrek \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/7YH98CmX/RAFDRA.jpg',  caption:'The Milky Way and stars over the Trossachs, Stirling, Scotland', credit:'Colin Fisher \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/kgr5RSLC/DTNKKD.jpg',  caption:'The Milky Way over tufa towers at Mono Lake, Mono Basin National Scenic Area, California', credit:'Russ Bishop \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/zfG3qr9B/PEXBX4.jpg',  caption:'The Milky Way and Perseid meteors over Rose Valley, Los Padres National Forest, California', credit:'Russ Bishop \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/cLHNHLLW/2A141H0.jpg', caption:'A trio of Geminid meteors over the Chiricahua Mountains in southeast Arizona', credit:'Alan Dyer/Stocktrek \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/mgc6Jzgv/2R401MT.jpg', caption:'The radiant point of the Perseid meteor shower in Perseus at Dinosaur Provincial Park, Alberta, Canada', credit:'Alan Dyer/Stocktrek \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/yN4nGL5y/2A1436E.jpg', caption:'The Perseid meteor shower and an aurora over the Saskatchewan Summer Star Party, Canada', credit:'Alan Dyer/Stocktrek \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/hG185cVq/2YXJNCX.jpg', caption:'The Perseid meteor shower over the badlands of Dinosaur Provincial Park, Alberta, Canada', credit:'Alan Dyer/Stocktrek \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/8Pv6YTSG/2GGP82E.jpg', caption:'A 30-second exposure of a Perseid meteor at Spruce Knob, West Virginia, August 2021', credit:'Science History Images \u00b7 Alamy'},
+  {full:'https://i.postimg.cc/VkVdgN74/HF839B.jpg',  caption:'A Perseid meteor over Spruce Knob, West Virginia, in a 30-second exposure, August 2016', credit:'NG Images \u00b7 Alamy'}
+];
+(function(){
+  if(!AN_PRESS_IMAGES.length) return;
+  const wrap = document.getElementById('anPress');
+  const grid = document.getElementById('anPressGrid');
+  if(!wrap || !grid) return;
+  wrap.hidden = false;
+  grid.innerHTML = AN_PRESS_IMAGES.map(im =>
+    '<a class="an-press-item" href="' + im.full + '" target="_blank" rel="noopener">' +
+      '<img src="' + (im.thumb || im.full) + '" alt="' + esc(im.caption || 'Night sky photograph') + '" loading="lazy">' +
+      '<span class="an-press-cap"><b>' + esc(im.caption || '') + '</b>' + (im.credit ? '<i>' + esc(im.credit) + '</i>' : '') + '</span>' +
+      '<span class="an-press-dl" aria-hidden="true">Full resolution &#8599;</span>' +
+    '</a>').join('');
 })();
 
 const AN_EMBED_BASE = 'https://gauthambc.github.io/action-network-meteors-spotting-odds/';
