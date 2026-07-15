@@ -137,12 +137,13 @@ body.an-embed .an-sec-head,body.an-embed .an-h2,body.an-embed .an-lede{display:n
 
 /* ============ JUMP NAV ============ */
 .an-jump-nav{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--an-border);}
-.an-jump-track{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:10px clamp(16px,2.4vw,40px);scrollbar-width:none;}
+.an-jump-track{display:flex;flex-wrap:wrap;align-items:center;gap:6px;overflow-x:visible;padding:9px clamp(16px,2.4vw,40px);}
 .an-jump-track::-webkit-scrollbar{display:none;}
 .an-jump-label{font-family:var(--an-display);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--an-muted);margin-right:6px;white-space:nowrap;}
-.an-jump-link{flex:0 0 auto;border:1px solid var(--an-border);background:#fff;color:var(--an-text);font-family:var(--an-display);font-weight:700;font-size:15px;letter-spacing:.04em;padding:7px 14px;cursor:pointer;transition:all .18s ease;}
+.an-jump-link{flex:0 0 auto;white-space:nowrap;border:1px solid var(--an-border);background:#fff;color:var(--an-text);font-family:var(--an-display);font-weight:700;font-size:clamp(12px,0.55vw + 8.4px,15px);letter-spacing:.04em;padding:6px clamp(8px,1.1vw,14px);cursor:pointer;transition:all .18s ease;}
 .an-jump-link:hover{border-color:var(--an-green);color:var(--an-green-dark);}
 .an-jump-link.is-active{background:var(--an-navy);border-color:var(--an-navy);color:#fff;}
+@media(max-width:860px){.an-jump-label{display:none;}}
 .an-backtop{display:flex;align-items:center;gap:14px;margin-top:clamp(18px,2.4vw,28px);padding:0 clamp(16px,2.4vw,40px);}
 .an-backtop::before,.an-backtop::after{content:"";flex:1;height:1px;background:var(--an-border);}
 .an-backtop-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--an-border);background:#fff;color:var(--an-green-dark);font-family:var(--an-display);font-weight:700;font-size:14px;letter-spacing:.04em;padding:8px 16px;cursor:pointer;transition:all .15s ease;}
