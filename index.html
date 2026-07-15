@@ -1702,6 +1702,7 @@ const searchBox = document.getElementById('stateSearch');
 const rowsNote = document.getElementById('rowsNote');
 const AN_VIEW_NOTE = 'Use the toggle to switch between the strike map and the full table.';
 let openAbbr = null;
+let allDetails = false;
 let tableCollapsed = true;
 const tableMoreBtn = document.getElementById('tableMore');
 const maxChance = AN_STATES[0].prob;
@@ -1711,7 +1712,7 @@ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'
 function rowHTML(s){
   const w = Math.max(2,(s.prob/maxChance)*100).toFixed(1);
   return `
-  <tr class="rowmain${s.rank<=3?' top3':''}${openAbbr===s.abbr?' open':''}" data-abbr="${s.abbr}" tabindex="0" role="button" aria-expanded="${openAbbr===s.abbr}">
+  <tr class="rowmain${s.rank<=3?' top3':''}${(allDetails||openAbbr===s.abbr)?' open':''}" data-abbr="${s.abbr}" tabindex="0" role="button" aria-expanded="${allDetails||openAbbr===s.abbr}">
     <td><span class="an-rk">${s.rank}</span></td>
     <td class="an-state-cell"><b>${esc(s.state)}</b></td>
     <td class="num chance-cell"><span class="an-chancebar" style="--w:${w}%"><i></i></span><span class="an-chance-val">${s.prob.toFixed(2)}%</span></td>
@@ -1721,7 +1722,7 @@ function rowHTML(s){
     <td class="num c-dsp">${s.b1} / ${s.b2} / ${s.b3}</td>
     <td class="c-site" style="font-size:13.5px;line-height:1.4;">${esc(s.site)}</td>
     <td><span class="an-caret" aria-hidden="true"></span></td>
-  </tr>` + (openAbbr===s.abbr ? detailHTML(s) : '');
+  </tr>` + ((allDetails||openAbbr===s.abbr) ? detailHTML(s) : '');
 }
 
 const DS_ICONS = {
@@ -2068,7 +2069,7 @@ const AN_PRESS_IMAGES = [
   wrap.hidden = false;
   grid.innerHTML = AN_PRESS_IMAGES.map((im, i) =>
     '<a class="an-press-item" href="' + im.full + '" target="_blank" rel="noopener" data-idx="' + i + '">' +
-      '<img src="' + (im.thumb || im.full) + '" alt="' + esc(im.caption || 'Night sky photograph') + '" loading="lazy">' +
+      '<img src="' + (im.thumb || im.full) + '" alt="' + esc(im.caption || 'Night sky photograph') + '" loading="lazy" referrerpolicy="no-referrer">' +
       '<span class="an-press-cap"><b>' + esc(im.caption || '') + '</b>' + (im.credit ? '<i>' + esc(im.credit) + '</i>' : '') + '</span>' +
       '<span class="an-press-dl" aria-hidden="true">Preview</span>' +
     '</a>').join('');
@@ -2082,7 +2083,7 @@ const AN_PRESS_IMAGES = [
       '<button class="an-lb-x" type="button" aria-label="Close preview">&#10005;</button>' +
       '<button class="an-lb-prev" type="button" aria-label="Previous image">&#8249;</button>' +
       '<button class="an-lb-next" type="button" aria-label="Next image">&#8250;</button>' +
-      '<img alt="">' +
+      '<img alt="" referrerpolicy="no-referrer">' +
       '<figcaption>' +
         '<div class="an-lb-copy"><b></b><i></i></div>' +
         '<span class="an-lb-count" aria-live="polite"></span>' +
@@ -2103,7 +2104,7 @@ const AN_PRESS_IMAGES = [
     lb.querySelector('.an-lb-count').textContent = (lbIdx + 1) + ' / ' + AN_PRESS_IMAGES.length;
     [lbIdx + 1, lbIdx - 1].forEach(n => {
       const nb = AN_PRESS_IMAGES[(n + AN_PRESS_IMAGES.length) % AN_PRESS_IMAGES.length];
-      if(nb){ const pre = new Image(); pre.src = nb.full; }
+      if(nb){ const pre = new Image(); pre.referrerPolicy = 'no-referrer'; pre.src = nb.full; }
     });
     lb.hidden = false;
     lb.querySelector('.an-lb-x').focus({preventScroll:true});
@@ -2259,7 +2260,7 @@ function anMapPNG(cfg, btn){
     ctx.font = "900 34px 'Barlow Condensed', 'Arial Narrow', sans-serif";
     ctx.textBaseline = 'alphabetic';
     ctx.textAlign = 'center';
-    ctx.fillText('The 2026 Asteroid Spotting Index', W / 2, 46);
+    ctx.fillText('The 2026 Meteor Spotting Index', W / 2, 46);
     ctx.textAlign = 'left';
     const isChoropleth = !!svg.querySelector('.an-state-shape');
     ctx.textAlign = 'center';
@@ -2299,7 +2300,7 @@ function anMapPNG(cfg, btn){
     /* source credit */
     ctx.fillStyle = 'rgba(255,255,255,.45)';
     ctx.font = "700 12px 'Barlow Condensed', 'Arial Narrow', sans-serif";
-    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 ASTEROID SPOTTING INDEX';
+    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 METEOR SPOTTING INDEX';
     ctx.fillText(credit, W - padX - ctx.measureText(credit).width, H - 18);
     URL.revokeObjectURL(url);
     anSaveBlob(c, cfg.file);
@@ -2525,7 +2526,10 @@ function anBackToTop(){
   let targetId = null;
   if(v === 'table'){
     setRankView(false);
-    if((q.get('rows') || '').toLowerCase() === 'all'){ tableCollapsed = false; renderTable(); }
+    const rows = (q.get('rows') || '').toLowerCase();
+    if(rows === 'all' || rows === 'expanded'){ tableCollapsed = false; }
+    if(rows === 'expanded'){ allDetails = true; }
+    if(rows) renderTable();
     targetId = 'sec-rankings';
   } else if(v === 'assets'){
     targetId = 'sec-embed';
