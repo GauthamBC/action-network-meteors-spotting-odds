@@ -2043,7 +2043,7 @@ const AN_EMBEDS = {
   });
   const credit = document.createElement('div');
   credit.className = 'an-embed-credit';
-  const pageURL = 'https://www.actionnetwork.com/entertainment/where-in-america-are-you-most-likely-to-spot-a-meteor';
+  const pageURL = 'https://www.actionnetwork.com/entertainment/where-in-america-are-you-most-likely-to-spot-a-meteor#meteor-index';
   credit.innerHTML = 'Source: <a href="' + pageURL + '" target="_blank" rel="noopener">Action Network | The 2026 Meteor Spotting Index</a>';
   target.parentNode.insertBefore(credit, target.nextSibling);
   setTimeout(anPostHeight, 300);
@@ -2524,7 +2524,10 @@ function anBackToTop(){
   const q = new URLSearchParams(location.search);
   if(q.get('embed')) return;
   const v = (q.get('view') || '').toLowerCase();
-  let targetId = null;
+  const AN_GOTO = {findings:'sec-findings', rankings:'sec-rankings', map:'sec-rankings',
+    top10:'sec-top10', leaderboards:'sec-fireballs', capitals:'sec-meteorites',
+    methodology:'sec-method', assets:'sec-embed', quote:'sec-findings'};
+  let targetId = AN_GOTO[(q.get('goto') || '').toLowerCase()] || null;
   if(v === 'table'){
     setRankView(false);
     const rows = (q.get('rows') || '').toLowerCase();
