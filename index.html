@@ -2321,25 +2321,29 @@ function anSectionPNG(key, btn){
     if(oddsNum) oddsNum.textContent = '+' + HERO_ODDS;
   }
   let restoreMapView = false, restoreCollapsed = false;
-  if(cfg.prep === 'table'){
-    if(tableView.hidden){ setRankView(false); restoreMapView = true; }
-    if(tableCollapsed){ tableCollapsed = false; renderTable(); restoreCollapsed = true; }
-  }
   const el = document.querySelector(cfg.sel);
   if(!el){ btn.textContent = 'Unavailable'; return; }
-  anForceReveal(el);
   const restore = [];
-  (cfg.hide || []).forEach(sel=>{
-    el.querySelectorAll(sel).forEach(n=>{ restore.push([n, n.style.display]); n.style.display = 'none'; });
+  anAnchor(btn, ()=>{
+    if(cfg.prep === 'table'){
+      if(tableView.hidden){ setRankView(false); restoreMapView = true; }
+      if(tableCollapsed){ tableCollapsed = false; renderTable(); restoreCollapsed = true; }
+    }
+    anForceReveal(el);
+    (cfg.hide || []).forEach(sel=>{
+      el.querySelectorAll(sel).forEach(n=>{ restore.push([n, n.style.display]); n.style.display = 'none'; });
+    });
+    if(cfg.frame) el.classList.add('an-snap-frame');
+    document.body.classList.add('an-exporting');
   });
-  if(cfg.frame) el.classList.add('an-snap-frame');
-  document.body.classList.add('an-exporting');
   const cleanup = ()=>{
-    restore.forEach(([n, d])=>{ n.style.display = d; });
-    if(cfg.frame) el.classList.remove('an-snap-frame');
-    document.body.classList.remove('an-exporting');
-    if(restoreCollapsed){ tableCollapsed = true; renderTable(); }
-    if(restoreMapView) setRankView(true);
+    anAnchor(btn, ()=>{
+      restore.forEach(([n, d])=>{ n.style.display = d; });
+      if(cfg.frame) el.classList.remove('an-snap-frame');
+      document.body.classList.remove('an-exporting');
+      if(restoreCollapsed){ tableCollapsed = true; renderTable(); }
+      if(restoreMapView) setRankView(true);
+    });
   };
   anLoadH2C().then(()=>new Promise(r=>setTimeout(r, 250))).then(()=>{
     return anRender(el, cfg.bg);
@@ -2361,8 +2365,10 @@ function anLeaderboardPNG(which, btn){
   const el = document.querySelector('#sec-fireballs .an-wrap');
   btn.dataset.orig = btn.dataset.orig || 'Download PNG \u25BE';
   const setLabel = t => { btn.innerHTML = t; };
-  el.classList.add('an-snap-pad');
-  document.body.classList.add('an-exporting');
+  anAnchor(btn, ()=>{
+    el.classList.add('an-snap-pad');
+    document.body.classList.add('an-exporting');
+  });
   anLoadH2C().then(async ()=>{
     for(let i=0;i<seq.length;i++){
       const m = seq[i];
@@ -2375,13 +2381,17 @@ function anLeaderboardPNG(which, btn){
       anSaveBlob(canvas, AN_LB_FILES[m]);
     }
     const restore = document.querySelector('#fbTabs button[data-metric="' + prev + '"]');
-    if(restore) restore.click();
-    el.classList.remove('an-snap-pad');
-    document.body.classList.remove('an-exporting');
+    anAnchor(btn, ()=>{
+      if(restore) restore.click();
+      el.classList.remove('an-snap-pad');
+      document.body.classList.remove('an-exporting');
+    });
     setLabel(btn.dataset.orig);
   }).catch(()=>{
-    el.classList.remove('an-snap-pad');
-    document.body.classList.remove('an-exporting');
+    anAnchor(btn, ()=>{
+      el.classList.remove('an-snap-pad');
+      document.body.classList.remove('an-exporting');
+    });
     setLabel('Use hosted page to export');
     setTimeout(()=>setLabel(btn.dataset.orig), 2600);
   });
@@ -2401,35 +2411,45 @@ document.addEventListener('click', ()=>{
   document.querySelectorAll('[data-ddtoggle]').forEach(b=>b.setAttribute('aria-expanded','false'));
 });
 const AN_RK_FILES = {full:'rankings-table', top:'rankings-top-10', bottom:'rankings-bottom-10'};
+function anAnchor(btn, fn){
+  const before = btn.getBoundingClientRect().top;
+  fn();
+  const delta = btn.getBoundingClientRect().top - before;
+  if(delta) window.scrollBy(0, delta);
+}
 function anRankPNG(kind, btn){
   if(kind === 'map'){ anSectionPNG('map', btn); return; }
   btn.dataset.orig = btn.dataset.orig || 'Download PNG \u25BE';
   btn.innerHTML = 'Rendering\u2026';
   const wasMapView = tableView.hidden;
-  if(wasMapView) setRankView(false);
   const wasCollapsed = tableCollapsed;
-  if(wasCollapsed){ tableCollapsed = false; renderTable(); }
   const card = document.querySelector('.an-table-card');
-  const mains = Array.from(card.querySelectorAll('tr.rowmain'));
-  const keep = kind === 'top' ? new Set(mains.slice(0, 10))
-             : kind === 'bottom' ? new Set(mains.slice(-10))
-             : new Set(mains);
   const restore = [];
-  const hide = el => { restore.push([el, el.style.display]); el.style.display = 'none'; };
-  mains.forEach(r => { if(!keep.has(r)) hide(r); r.classList.add('barfill'); });
-  card.querySelectorAll('tr.detail').forEach(hide);
-  if(kind !== 'full'){
-    const sw = document.getElementById('searchWrap');
-    if(sw && !sw.hidden) hide(sw);
-  }
-  document.body.classList.add('an-exporting');
-  card.classList.add('an-snap-pad-sm');
+  anAnchor(btn, ()=>{
+    if(wasMapView) setRankView(false);
+    if(wasCollapsed){ tableCollapsed = false; renderTable(); }
+    const mains = Array.from(card.querySelectorAll('tr.rowmain'));
+    const keep = kind === 'top' ? new Set(mains.slice(0, 10))
+               : kind === 'bottom' ? new Set(mains.slice(-10))
+               : new Set(mains);
+    const hide = el => { restore.push([el, el.style.display]); el.style.display = 'none'; };
+    mains.forEach(r => { if(!keep.has(r)) hide(r); r.classList.add('barfill'); });
+    card.querySelectorAll('tr.detail').forEach(hide);
+    if(kind !== 'full'){
+      const sw = document.getElementById('searchWrap');
+      if(sw && !sw.hidden) hide(sw);
+    }
+    document.body.classList.add('an-exporting');
+    card.classList.add('an-snap-pad-sm');
+  });
   const cleanup = ()=>{
-    restore.forEach(([el, d]) => { el.style.display = d; });
-    document.body.classList.remove('an-exporting');
-    card.classList.remove('an-snap-pad-sm');
-    if(wasCollapsed){ tableCollapsed = true; renderTable(); }
-    if(wasMapView) setRankView(true);
+    anAnchor(btn, ()=>{
+      restore.forEach(([el, d]) => { el.style.display = d; });
+      document.body.classList.remove('an-exporting');
+      card.classList.remove('an-snap-pad-sm');
+      if(wasCollapsed){ tableCollapsed = true; renderTable(); }
+      if(wasMapView) setRankView(true);
+    });
   };
   anLoadH2C().then(()=>new Promise(r=>setTimeout(r, 350)))
     .then(()=>anRender(card, '#ffffff'))
