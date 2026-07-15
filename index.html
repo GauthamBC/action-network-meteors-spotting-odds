@@ -72,6 +72,7 @@ body.an-exporting .an-rank td:last-child,
 body.an-exporting .an-rank thead th:last-child{display:none;}
 body.an-exporting .an-state-cell b{white-space:nowrap;}
 body.an-exporting .an-scroll-hint{display:none !important;}
+body.an-exporting .an-meteor,body.an-exporting .an-ripple{display:none !important;}
 .an-embed-credit{padding:9px clamp(16px,2.4vw,40px);font-family:var(--an-display);font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--an-muted);border-top:1px solid var(--an-border);background:#fff;}
 .an-embed-credit a{color:var(--an-green-dark);text-decoration:none;}
 body.an-embed .an-jump-nav{display:none;}
@@ -90,12 +91,6 @@ body.an-embed .an-jump-nav{display:none;}
 .an-backtop-btn:hover{border-color:var(--an-green);background:var(--an-green-soft);}
 #sec-meteorites .an-backtop{margin:clamp(18px,2.4vw,28px) 0;}
 body.an-embed .an-backtop{display:none;}
-/* Clearance for the host page's sticky header: auto-height embeds can't
-   scroll internally, so jumps bubble to the parent via scrollIntoView,
-   which honors scroll-margin. Tune to the host header height. */
-#sec-hero,#sec-findings,#sec-rankings,#sec-top10,#sec-fireballs,
-#sec-meteorites,#sec-method,#sec-embed,
-.an-table-card{scroll-margin-top:76px;}
 
 /* ============ HERO ============ */
 .an-band-dark{position:relative;background:
@@ -308,11 +303,11 @@ body.an-embed .an-backtop{display:none;}
 .an-kf h3{grid-column:2;margin:0;font-weight:800;font-size:clamp(18px,1.8vw,21px);line-height:1.15;color:#fff;}
 .an-kf h3 em{font-style:normal;color:var(--an-green-bright);}
 .an-kf p{grid-column:2;margin:0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.72);}
-.an-kf-stats{grid-column:2;display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:8px;}
+.an-kf-stats{grid-column:2;display:flex;flex-wrap:nowrap;align-items:center;gap:10px;margin-top:8px;min-width:0;}
 .an-kf-chip{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);padding:6px 11px;min-width:86px;}
 .an-kf-chip b{display:block;font-family:var(--an-display);font-weight:800;font-size:17px;line-height:1.05;color:var(--an-green-bright);}
 .an-kf-chip span{display:block;font-family:var(--an-display);font-weight:700;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:2px;}
-.an-kf-chip.grow{flex:1 1 240px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;min-width:0;}
+.an-kf-chip.grow{flex:1 1 auto;display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:8px 14px;min-width:0;}
 .an-kf-chip.grow .kf-chip-txt{flex:0 0 auto;margin-top:0;}
 .an-kf-dia{display:flex;gap:5px;flex:0 1 auto;min-width:0;}
 .an-kf-dia i{width:8px;height:8px;flex:0 0 auto;transform:rotate(45deg) scale(.35);border:1px solid rgba(255,255,255,.28);background:transparent;opacity:.6;transition:transform .45s cubic-bezier(.35,0,.25,1),opacity .35s ease;}
@@ -325,6 +320,17 @@ body.an-exporting .an-kf-dia i{transition:none !important;transform:rotate(45deg
 .an-meter i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--an-green-dark),var(--an-green-bright));transition:width 1.3s cubic-bezier(.3,0,.2,1) .2s;}
 .an-meter[data-fill].filled i,.an-kf.filled .an-meter i{width:var(--w);}
 .an-kf-metercap{font-family:var(--an-display);font-weight:700;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);white-space:nowrap;}
+@media(max-width:900px){
+  .an-kf-chip{min-width:0;padding:6px 9px;}
+  .an-kf-dia{gap:4px;}
+  .an-kf-dia i{width:7px;height:7px;}
+}
+@media(max-width:700px){
+  .an-kf-dia i:nth-child(even){display:none;}
+}
+@media(max-width:430px){
+  .an-kf-dia{display:none;}
+}
 @media(max-width:560px){
   .an-kf{grid-template-columns:1fr;padding-left:14px;}
   .an-kf-rank{grid-row:auto;}
@@ -338,10 +344,19 @@ body.an-exporting .an-kf-dia i{transition:none !important;transform:rotate(45deg
 .an-t10-rank{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;background:var(--an-green);color:var(--an-navy);font-family:var(--an-display);font-weight:900;font-size:19px;}
 .an-t10-name{margin:0;font-family:var(--an-display);font-weight:800;font-size:20px;line-height:1.1;color:var(--an-navy);}
 .an-t10 p{margin:0;font-size:14px;line-height:1.55;color:#3c464d;}
-.an-t10-facts{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
-.an-t10-facts li{flex:1 1 auto;border:1px solid var(--an-border);background:var(--an-bg2);padding:5px 11px;}
+.an-t10-facts{list-style:none;margin:0;padding:0;display:flex;flex-wrap:nowrap;gap:8px;min-width:0;}
+.an-t10-facts li{flex:1 1 auto;min-width:0;border:1px solid var(--an-border);background:var(--an-bg2);padding:5px 11px;}
 .an-t10-facts b{display:block;font-family:var(--an-display);font-weight:800;font-size:13.5px;line-height:1.05;color:var(--an-navy);}
 .an-t10-facts span{display:block;font-family:var(--an-display);font-weight:700;font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--an-muted);margin-top:2px;white-space:nowrap;}
+@media(max-width:860px){
+  .an-t10-facts li{padding:5px 8px;}
+  .an-t10-facts span{white-space:normal;line-height:1.3;letter-spacing:.1em;}
+}
+@media(max-width:560px){
+  .an-t10-facts li{padding:4px 6px;}
+  .an-t10-facts b{font-size:12px;}
+  .an-t10-facts span{font-size:7.5px;letter-spacing:.07em;}
+}
 .an-t10-facts li.is-chance{background:var(--an-navy);border-color:var(--an-navy);}
 .an-t10-facts li.is-chance b{color:var(--an-green-bright);}
 .an-t10-facts li.is-chance span{color:rgba(255,255,255,.62);}
@@ -356,7 +371,9 @@ body.an-exporting .an-kf-dia i{transition:none !important;transform:rotate(45deg
 /* ============ RANKINGS ============ */
 .an-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px;}
 .an-toggle{display:inline-flex;border:1px solid var(--an-border-2);background:#fff;}
-.an-toggle button{border:0;background:transparent;padding:9px 16px;font-family:var(--an-display);font-weight:800;font-size:15px;letter-spacing:.05em;color:var(--an-muted);cursor:pointer;transition:all .16s ease;}
+.an-toggle button{border:0;background:transparent;padding:9px 16px;font-family:var(--an-display);font-weight:800;font-size:15px;letter-spacing:.05em;color:var(--an-navy);cursor:pointer;transition:all .16s ease;}
+.an-toggle button + button{border-left:1px solid var(--an-border);}
+.an-toggle button:hover:not(.active){background:var(--an-green-soft);color:var(--an-green-dark);}
 .an-toggle button.active{background:var(--an-navy);color:#fff;}
 .an-search{flex:1 1 200px;max-width:300px;position:relative;}
 .an-search input{width:100%;border:1px solid var(--an-border-2);background:#fff;padding:9px 12px 9px 34px;font-family:var(--an-serif);font-size:14.5px;color:var(--an-text);}
@@ -447,16 +464,13 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
 .an-ds-ico{position:absolute;top:7px;right:8px;width:15px;height:15px;color:var(--an-green-dark);}
 .an-ds-ico svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
 .an-detail-left{display:flex;flex-direction:column;gap:12px;min-width:0;}
-.an-detail-left .an-detail-site{flex:1 1 auto;}
-.an-detail-dsp{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;background:#fff;border:1px solid var(--an-border);border-left:4px solid var(--an-green);padding:9px 14px 12px;}
-.an-dsp-ico{flex:0 0 auto;width:20px;height:20px;color:var(--an-green-dark);}
-.an-dsp-ico svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
-.an-dsp-copy b{display:block;font-family:var(--an-display);font-weight:800;font-size:17px;line-height:1;color:var(--an-navy);}
-.an-dsp-copy span{display:block;font-family:var(--an-display);font-weight:700;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--an-muted);margin-top:2px;white-space:nowrap;}
-.an-dsp-cap{flex:0 1 auto;margin-left:auto;text-align:right;font-family:var(--an-display);font-weight:700;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--an-muted);}
-.an-dsp-meter{flex:1 1 100%;min-width:0;height:8px;background:#e9edf0;position:relative;}
-.an-dsp-meter i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--an-green-dark),var(--an-green));transition:width .9s cubic-bezier(.35,0,.25,1);}
-.an-dsp-meter.fill i{width:var(--w);}
+.an-detail-left .an-detail-take{flex:1 1 auto;}
+.an-detail-take{background:#fff;border:1px solid var(--an-border);border-left:4px solid var(--an-green);padding:11px 15px 12px;}
+.an-take-copy .an-take-label{display:block;font-family:var(--an-display);font-weight:800;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--an-green-dark);margin-bottom:3px;}
+.an-take-copy span{display:block;font-family:var(--an-serif);font-size:13.5px;line-height:1.55;color:#3c464d;}
+.an-take-copy .an-take-site{margin-top:8px;padding-top:8px;border-top:1px dashed var(--an-border);font-size:12.5px;color:#4a545b;}
+.an-take-copy .an-take-site b{display:inline;font-family:var(--an-serif);font-weight:700;font-size:inherit;letter-spacing:0;text-transform:none;color:var(--an-text);margin:0;}
+.an-take-copy .an-take-site b.an-take-pre{font-weight:600;color:var(--an-green-dark);}
 .an-empty{padding:22px;text-align:center;color:var(--an-muted);font-size:14.5px;}
 
 /* ============ FIREBALL BARS ============ */
@@ -535,7 +549,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
   .an-reveal{opacity:1;transform:none;transition:none;}
   .an-star,.an-meteor{animation:none!important;}
   .an-meteor{display:none;}
-  .an-meter i,.an-fb-bar,.an-mw-bar,.an-chancebar i,.an-dsp-meter i,.an-kf-dia i{transition:none;}
+  .an-meter i,.an-fb-bar,.an-mw-bar,.an-chancebar i,.an-kf-dia i{transition:none;}
 }
 </style>
 </head>
@@ -765,7 +779,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.8-3.8"></path></svg>
           <input type="search" id="stateSearch" placeholder="Find your state&hellip;" aria-label="Find your state">
         </div>
-        <span class="an-controls-note" id="rowsNote">Hover or tap any state for its rank, implied chance, and odds.</span>
+        <span class="an-controls-note" id="rowsNote">Use the toggle to switch between the strike map and the full table.</span>
       </div>
 
       <div id="mapView">
@@ -801,7 +815,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
                 <th class="num c-odds"><span class="an-thl" tabindex="0" data-tip="American moneyline odds converted from each state&#8217;s score on the six viewing factors. These are editorial odds, not a betting offer."><span class="th-full">Action&nbsp;Network Odds</span><span class="th-short">AN Odds</span></span></th>
                 <th class="num c-clear"><span class="an-thl" tabindex="0" data-tip="Average annual clear days across the state&#8217;s NOAA weather stations.">Clear Days</span></th>
                 <th class="num c-fire"><span class="an-thl" tabindex="0" data-tip="Unique fireball events reported to the American Meteor Society from the state, 2021&#8211;2025.">Fireballs &#8217;21&#8211;&#8217;25</span></th>
-                <th class="num c-dsp"><span class="an-thl" tabindex="0" data-tip="Weighted dark-sky points from the Bortle scale, which grades night-sky darkness from 1 (darkest) to 9: Class 1 sites count 4, Class 2 count 2, Class 3 count 1.">Dark-Sky Pts</span></th>
+                <th class="num c-dsp"><span class="an-thl" tabindex="0" data-tip="Count of the state&#8217;s Bortle Class 1, 2, and 3 dark-sky sites, the darkest grades on the scale. The odds model weights these as dark-sky points: Class 1 counts 4, Class 2 counts 2, Class 3 counts 1.">Bortle 1/2/3</span></th>
                 <th class="c-site"><span class="an-thl" tabindex="0" data-tip="The darkest listed public site in the state. Select a row for the full breakdown.">Best Viewing Site</span></th>
                 <th aria-hidden="true"></th>
               </tr>
@@ -991,9 +1005,10 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
         <div class="an-toggle" id="fbTabs">
           <button type="button" data-metric="fire" class="active" aria-pressed="true">Fireballs</button>
           <button type="button" data-metric="clear" aria-pressed="false">Clear Days</button>
-          <button type="button" data-metric="dsp" aria-pressed="false">Dark-Sky Pts</button>
+          <button type="button" data-metric="dsp" aria-pressed="false">Dark-Sky Sites</button>
           <button type="button" data-metric="elev" aria-pressed="false">Elevation</button>
         </div>
+        <span class="an-controls-note">Use the tabs to switch between the four ranking metrics.</span>
       </div>
       <div class="an-fb-list" id="fbList" data-fill></div>
     </div>
@@ -1082,6 +1097,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
       <div class="an-note-card">
         <h3>From Factors to Odds and Implied Chance</h3>
         <p>Stronger viewing conditions produce shorter odds and a higher implied spotting chance. California leads at +1262, which converts to a 7.34% implied chance, while the longest shots run past +16000 and fall below a 1% implied chance.</p>
+        <p>The dark-sky score is a separate number created for scoring purposes from each state&#8217;s Bortle Class 1&#8211;3 site counts: Class 1 sites earn 4 points, Class 2 earn 2, and Class 3 earn 1, so the darkest skies carry the most weight. Five states have no Bortle Class 1&#8211;3 site at all; they score zero on this factor, and their recommended viewing site is instead the best available Bortle Class 4 or 5 location.</p>
         <p>Recommended viewing sites are each state&#8217;s lowest-Bortle-class public site, with ties broken by DarkSky certification and clearly identified public land. Nighttime access is not verified, so check with the site before traveling.</p>
       </div>
       <div class="an-disclaimer">These implied spotting chances and odds are model-based editorial comparisons created for entertainment. They do not represent an actual betting market or guarantee that an asteroid, meteor, fireball, or meteorite will be seen.</div>
@@ -1112,11 +1128,11 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
         </div>
         <div class="an-ek">
           <h3>The Leaderboards</h3>
-          <p>Top-ten bar charts for fireballs, clear days, dark-sky points and elevation.</p>
+          <p>Top-ten bar charts for fireballs, clear days, dark-sky sites and elevation.</p>
           <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="leaderboards">Copy embed code</button><div class="an-ek-dd"><button type="button" class="an-ek-btn" data-ddtoggle aria-haspopup="true" aria-expanded="false">Download PNG <span aria-hidden="true">&#9662;</span></button><div class="an-ek-menu" hidden>
             <button type="button" data-lbpng="fire">Fireballs</button>
             <button type="button" data-lbpng="clear">Clear Days</button>
-            <button type="button" data-lbpng="dsp">Dark-Sky Pts</button>
+            <button type="button" data-lbpng="dsp">Dark-Sky Sites</button>
             <button type="button" data-lbpng="elev">Elevation</button>
             <button type="button" data-lbpng="all">All four</button>
           </div></div></div>
@@ -1134,7 +1150,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
         <div class="an-ek">
           <h3>The Headline Card</h3>
           <p>The intro in one compact embed: the masthead, the headline numbers, and No. 1 California with its odds.</p>
-          <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="hero">Copy embed code</button></div>
+          <div class="an-ek-btns"><button type="button" class="an-ek-btn primary" data-copy="hero">Copy embed code</button><button type="button" class="an-ek-btn" data-png="hero">Download PNG</button></div>
         </div>
       </div>
       <p class="an-ek-note">Questions or custom sizes: contact the Action Network content team.</p>
@@ -1158,7 +1174,7 @@ tr.detail td{background:#f4faf7;border-top:0;padding:0 12px 12px;}
 </main>
 
 <script>
-const AN_STATES = [{"rank":1,"state":"California","abbr":"CA","prob":7.34,"odds":"+1262","b1":7,"b2":32,"b3":0,"dsp":92,"clear":174.4,"fire":2897,"obs":45,"cert":6,"elev":2900,"site":"Death Valley National Park","city":"Furnace Creek, CA","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/deva/index.htm","why":"Bortle Class 1; National Park"},{"rank":2,"state":"Arizona","abbr":"AZ","prob":5.14,"odds":"+1844","b1":1,"b2":7,"b3":0,"dsp":18,"clear":197.0,"fire":981,"obs":48,"cert":26,"elev":4100,"site":"Grand Canyon National Park (South Rim)","city":"Tusayan, AZ","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/grca/index.htm","why":"Bortle Class 1; National Park"},{"rank":3,"state":"Utah","abbr":"UT","prob":4.54,"odds":"+2105","b1":6,"b2":18,"b3":0,"dsp":60,"clear":138.0,"fire":551,"obs":5,"cert":28,"elev":6100,"site":"Canyonlands National Park","city":"Moab, UT","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/cany/index.htm","why":"Bortle Class 1; National Park"},{"rank":4,"state":"Texas","abbr":"TX","prob":4.16,"odds":"+2302","b1":2,"b2":11,"b3":3,"dsp":33,"clear":129.7,"fire":1907,"obs":14,"cert":21,"elev":1700,"site":"Big Bend National Park","city":"Terlingua, TX","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/bibe/index.htm","why":"Bortle Class 1; National Park"},{"rank":5,"state":"Colorado","abbr":"CO","prob":4.08,"odds":"+2349","b1":2,"b2":17,"b3":0,"dsp":42,"clear":133.0,"fire":929,"obs":7,"cert":22,"elev":6800,"site":"Dinosaur National Monument","city":"Dinosaur, CO","bortle":1,"siteType":"National Monument","siteURL":"https://www.nps.gov/dino/planyourvisit/stargazing.htm","why":"Bortle Class 1; National Monument"},{"rank":6,"state":"New Mexico","abbr":"NM","prob":3.93,"odds":"+2448","b1":4,"b2":13,"b3":0,"dsp":42,"clear":165.7,"fire":446,"obs":13,"cert":9,"elev":5700,"site":"Clayton Lake State Park and Dinosaur Trackways","city":"Clayton, NM","bortle":1,"siteType":"State Park","siteURL":"https://www.emnrd.nm.gov/spd/find-a-park/clayton-lake-state-park-and-dinosaur-trackways/","why":"Bortle Class 1; State Park"},{"rank":7,"state":"Oregon","abbr":"OR","prob":3.59,"odds":"+2688","b1":7,"b2":25,"b3":0,"dsp":78,"clear":91.8,"fire":681,"obs":4,"cert":8,"elev":3300,"site":"Bates State Park","city":"Prairie City, OR","bortle":1,"siteType":"State Park","siteURL":"https://stateparks.oregon.gov/index.cfm?do=park.profile&parkId=109","why":"Bortle Class 1; State Park"},{"rank":8,"state":"Nevada","abbr":"NV","prob":3.02,"odds":"+3215","b1":5,"b2":6,"b3":0,"dsp":32,"clear":153.4,"fire":475,"obs":1,"cert":2,"elev":5500,"site":"Great Basin National Park","city":"Baker, NV","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/grba/index.htm","why":"Bortle Class 1; National Park"},{"rank":9,"state":"Michigan","abbr":"MI","prob":2.38,"odds":"+4103","b1":1,"b2":20,"b3":0,"dsp":44,"clear":68.6,"fire":1024,"obs":12,"cert":5,"elev":900,"site":"Muskallonge Lake State Park","city":"Newberry, MI","bortle":1,"siteType":"State Park","siteURL":"https://www.michigan.gov/dnr/places/state-parks/muskallonge-lake","why":"Bortle Class 1; State Park"},{"rank":10,"state":"Oklahoma","abbr":"OK","prob":2.3,"odds":"+4241","b1":1,"b2":5,"b3":9,"dsp":23,"clear":133.0,"fire":644,"obs":4,"cert":1,"elev":1300,"site":"Black Mesa State Park and Nature Preserve","city":"Kenton, OK","bortle":1,"siteType":"State Park","siteURL":"https://www.travelok.com/state-parks/black-mesa-state-park-nature-preserve","why":"Bortle Class 1; State Park"},{"rank":11,"state":"Kansas","abbr":"KS","prob":2.23,"odds":"+4376","b1":0,"b2":11,"b3":0,"dsp":22,"clear":130.6,"fire":499,"obs":8,"cert":0,"elev":2000,"site":"Cedar Bluff State Park","city":"Ellis, KS","bortle":2,"siteType":"State Park","siteURL":"https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/cedar-bluff","why":"Bortle Class 2; State Park"},{"rank":12,"state":"Idaho","abbr":"ID","prob":2.18,"odds":"+4494","b1":3,"b2":9,"b3":0,"dsp":30,"clear":105.7,"fire":368,"obs":1,"cert":4,"elev":5000,"site":"Central Idaho Dark Sky Reserve","city":"Stanley, ID","bortle":1,"siteType":"National Forest","siteURL":"https://idahodarksky.org/","why":"Bortle Class 1; National Forest"},{"rank":13,"state":"Alaska","abbr":"AK","prob":2.15,"odds":"+4540","b1":13,"b2":9,"b3":0,"dsp":70,"clear":60.2,"fire":177,"obs":1,"cert":0,"elev":1900,"site":"Denali National Park and Preserve","city":"Healy, AK","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/dena/index.htm","why":"Bortle Class 1; National Park"},{"rank":14,"state":"Florida","abbr":"FL","prob":2.1,"odds":"+4671","b1":0,"b2":3,"b3":1,"dsp":7,"clear":97.0,"fire":1889,"obs":6,"cert":3,"elev":100,"site":"Big Cypress National Preserve","city":"Ochopee, FL","bortle":2,"siteType":"National Park","siteURL":"https://www.nps.gov/bicy/planyourvisit/astronomy-programs.htm","why":"Bortle Class 2; National Park"},{"rank":15,"state":"Pennsylvania","abbr":"PA","prob":2.07,"odds":"+4723","b1":0,"b2":2,"b3":17,"dsp":21,"clear":79.3,"fire":1426,"obs":14,"cert":1,"elev":1100,"site":"Cherry Springs State Park","city":"Coudersport, PA","bortle":2,"siteType":"State Park","siteURL":"https://www.dcnr.pa.gov/StateParks/FindAPark/CherrySpringsStatePark/Pages/Stargazing.aspx","why":"Bortle Class 2; State Park"},{"rank":16,"state":"North Carolina","abbr":"NC","prob":2.07,"odds":"+4729","b1":0,"b2":3,"b3":3,"dsp":9,"clear":108.0,"fire":1298,"obs":7,"cert":5,"elev":700,"site":"Earth to Sky Park","city":"Burnsville, NC","bortle":2,"siteType":"State Park","siteURL":"https://www.mayland.edu/foundation/foundation-projects/earth-to-sky-park/","why":"Bortle Class 2; State Park"},{"rank":17,"state":"New York","abbr":"NY","prob":2.04,"odds":"+4808","b1":0,"b2":1,"b3":17,"dsp":19,"clear":75.0,"fire":1419,"obs":21,"cert":0,"elev":1000,"site":"Adirondack Park","city":"Tupper Lake, NY","bortle":2,"siteType":"Observatory","siteURL":"https://apa.ny.gov/about_park/index.html","why":"Bortle Class 2; Observatory"},{"rank":18,"state":"Virginia","abbr":"VA","prob":2.04,"odds":"+4814","b1":0,"b2":4,"b3":4,"dsp":12,"clear":105.0,"fire":1136,"obs":6,"cert":6,"elev":950,"site":"James River State Park","city":"Gladstone, VA","bortle":2,"siteType":"State Park","siteURL":"https://www.dcr.virginia.gov/state-parks/james-river","why":"Bortle Class 2; State Park"},{"rank":19,"state":"Minnesota","abbr":"MN","prob":1.99,"odds":"+4919","b1":1,"b2":15,"b3":0,"dsp":34,"clear":86.2,"fire":680,"obs":9,"cert":1,"elev":1200,"site":"Judge C.R. Magney State Park","city":"Grand Marais, MN","bortle":1,"siteType":"State Park","siteURL":"https://www.dnr.state.mn.us/state_parks/park.html?id=spk00193","why":"Bortle Class 1; State Park"},{"rank":20,"state":"Hawaii","abbr":"HI","prob":1.98,"odds":"+4945","b1":2,"b2":12,"b3":0,"dsp":32,"clear":78.2,"fire":257,"obs":28,"cert":0,"elev":3030,"site":"Manukā State Wayside","city":"Ocean View, HI","bortle":1,"siteType":"State Park","siteURL":"https://dlnr.hawaii.gov/dsp/parks/hawaii/manuka-state-wayside/","why":"Bortle Class 1; State Park"},{"rank":21,"state":"Wyoming","abbr":"WY","prob":1.78,"odds":"+5533","b1":2,"b2":4,"b3":0,"dsp":16,"clear":105.5,"fire":182,"obs":3,"cert":3,"elev":6700,"site":"Yellowstone National Park","city":"West Yellowstone, MT","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/yell/index.htm","why":"Bortle Class 1; National Park"},{"rank":22,"state":"Georgia","abbr":"GA","prob":1.77,"odds":"+5552","b1":0,"b2":2,"b3":5,"dsp":9,"clear":110.2,"fire":945,"obs":8,"cert":1,"elev":600,"site":"Stephen C. Foster State Park","city":"Fargo, GA","bortle":2,"siteType":"State Park","siteURL":"https://gastateparks.org/StephenCFoster","why":"Bortle Class 2; State Park"},{"rank":23,"state":"South Dakota","abbr":"SD","prob":1.77,"odds":"+5557","b1":1,"b2":13,"b3":0,"dsp":30,"clear":105.2,"fire":184,"obs":2,"cert":0,"elev":2200,"site":"Black Hills National Forest","city":"Custer, SD","bortle":1,"siteType":"National Forest","siteURL":"https://www.fs.usda.gov/blackhills","why":"Bortle Class 1; National Forest"},{"rank":24,"state":"Washington","abbr":"WA","prob":1.71,"odds":"+5735","b1":0,"b2":14,"b3":0,"dsp":28,"clear":71.2,"fire":907,"obs":8,"cert":0,"elev":1700,"site":"Mount Rainier National Park","city":"Ashford, WA","bortle":2,"siteType":"National Park","siteURL":"https://www.nps.gov/mora/index.htm","why":"Bortle Class 2; National Park"},{"rank":25,"state":"Montana","abbr":"MT","prob":1.64,"odds":"+6001","b1":4,"b2":8,"b3":0,"dsp":32,"clear":80.2,"fire":319,"obs":1,"cert":2,"elev":3400,"site":"Painted Rocks State Park","city":"Darby, MT","bortle":1,"siteType":"State Park","siteURL":"https://fwp.mt.gov/stateparks/painted-rocks","why":"Bortle Class 1; State Park"},{"rank":26,"state":"Nebraska","abbr":"NE","prob":1.64,"odds":"+6011","b1":2,"b2":1,"b3":3,"dsp":13,"clear":116.4,"fire":257,"obs":6,"cert":1,"elev":2600,"site":"Valentine National Wildlife Refuge","city":"Valentine, NE","bortle":1,"siteType":"Wildlife Refuge/Reserve","siteURL":"https://www.fws.gov/refuge/valentine","why":"Bortle Class 1; Wildlife Refuge/Reserve"},{"rank":27,"state":"Illinois","abbr":"IL","prob":1.61,"odds":"+6096","b1":0,"b2":1,"b3":5,"dsp":7,"clear":98.3,"fire":1022,"obs":5,"cert":4,"elev":600,"site":"Middle Fork River Forest Preserve","city":"Penfield, IL","bortle":2,"siteType":"State Forest","siteURL":"https://www.ccfpd.org/Forest-Preserves/Middle-Fork-River/International-Dark-Sky-Park","why":"Bortle Class 2; State Forest"},{"rank":28,"state":"Missouri","abbr":"MO","prob":1.52,"odds":"+6479","b1":0,"b2":2,"b3":0,"dsp":4,"clear":110.0,"fire":768,"obs":6,"cert":2,"elev":800,"site":"Current River State Park","city":"Salem, MO","bortle":2,"siteType":"State Park","siteURL":"https://mostateparks.com/park/current-river-state-park","why":"Bortle Class 2; State Park"},{"rank":29,"state":"Tennessee","abbr":"TN","prob":1.51,"odds":"+6520","b1":0,"b2":1,"b3":4,"dsp":6,"clear":103.0,"fire":856,"obs":5,"cert":2,"elev":900,"site":"Obed Wild and Scenic River","city":"Wartburg, TN","bortle":2,"siteType":"National Preserve/Reserve","siteURL":"https://www.nps.gov/obed/index.htm","why":"Bortle Class 2; National Preserve/Reserve"},{"rank":30,"state":"Massachusetts","abbr":"MA","prob":1.48,"odds":"+6656","b1":0,"b2":0,"b3":3,"dsp":3,"clear":94.0,"fire":865,"obs":20,"cert":0,"elev":500,"site":"Kenneth Dubuque Memorial State Forest","city":"Hawley, MA","bortle":3,"siteType":"State Forest","siteURL":"https://www.mass.gov/locations/kenneth-dubuque-memorial-state-forest","why":"Bortle Class 3; State Forest"},{"rank":31,"state":"Arkansas","abbr":"AR","prob":1.47,"odds":"+6692","b1":0,"b2":3,"b3":0,"dsp":6,"clear":121.0,"fire":483,"obs":3,"cert":1,"elev":650,"site":"Cossatot River State Park–Natural Area","city":"Wickes, AR","bortle":2,"siteType":"State Park","siteURL":"https://www.arkansasstateparks.com/parks/cossatot-river-state-park-natural-area","why":"Bortle Class 2; State Park"},{"rank":32,"state":"Wisconsin","abbr":"WI","prob":1.46,"odds":"+6753","b1":0,"b2":4,"b3":6,"dsp":14,"clear":89.8,"fire":797,"obs":6,"cert":0,"elev":1050,"site":"Big Bay State Park","city":"La Pointe, WI","bortle":2,"siteType":"State Park","siteURL":"https://dnr.wisconsin.gov/topic/parks/bigbay","why":"Bortle Class 2; State Park"},{"rank":33,"state":"Iowa","abbr":"IA","prob":1.41,"odds":"+7016","b1":0,"b2":1,"b3":12,"dsp":14,"clear":98.0,"fire":473,"obs":7,"cert":0,"elev":1100,"site":"Nine Eagles State Park","city":"Davis City, IA","bortle":2,"siteType":"State Park","siteURL":"https://iowastateparks.reserveamerica.com/camping/nine-eagles-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610128","why":"Bortle Class 2; State Park"},{"rank":34,"state":"South Carolina","abbr":"SC","prob":1.34,"odds":"+7352","b1":0,"b2":0,"b3":3,"dsp":3,"clear":112.7,"fire":697,"obs":3,"cert":0,"elev":350,"site":"Francis Marion National Forest","city":"McClellanville, SC","bortle":3,"siteType":"National Forest","siteURL":"https://www.fs.usda.gov/scnfs/","why":"Bortle Class 3; National Forest"},{"rank":35,"state":"Maine","abbr":"ME","prob":1.34,"odds":"+7366","b1":1,"b2":10,"b3":0,"dsp":24,"clear":80.0,"fire":435,"obs":3,"cert":2,"elev":600,"site":"Katahdin Woods and Waters National Monument","city":"Patten, ME","bortle":2,"siteType":"Observatory","siteURL":"https://www.nps.gov/kaww/planyourvisit/stargazing.htm","why":"Bortle Class 1; Observatory"},{"rank":36,"state":"Alabama","abbr":"AL","prob":1.31,"odds":"+7509","b1":0,"b2":3,"b3":3,"dsp":9,"clear":102.0,"fire":632,"obs":3,"cert":0,"elev":500,"site":"Bladon Springs State Park","city":"Bladon Springs, AL","bortle":2,"siteType":"State Park","siteURL":"https://www.alapark.com/parks/bladon-springs-state-park","why":"Bortle Class 2; State Park"},{"rank":37,"state":"Ohio","abbr":"OH","prob":1.31,"odds":"+7540","b1":0,"b2":0,"b3":4,"dsp":4,"clear":71.6,"fire":1232,"obs":11,"cert":2,"elev":850,"site":"Observatory Park","city":"Montville, OH","bortle":3,"siteType":"State Park","siteURL":"https://geaugaparkdistrict.org/park/observatory-park/","why":"Bortle Class 3; State Park"},{"rank":38,"state":"Maryland","abbr":"MD","prob":1.23,"odds":"+8008","b1":0,"b2":0,"b3":2,"dsp":2,"clear":105.0,"fire":760,"obs":3,"cert":0,"elev":350,"site":"Point Lookout State Park","city":"Scotland, MD","bortle":3,"siteType":"State Park","siteURL":"https://dnr.maryland.gov/publiclands/Pages/southern/pointlookout.aspx","why":"Bortle Class 3; State Park"},{"rank":39,"state":"Mississippi","abbr":"MS","prob":1.22,"odds":"+8077","b1":0,"b2":0,"b3":6,"dsp":6,"clear":112.7,"fire":321,"obs":5,"cert":0,"elev":300,"site":"Holmes County State Park","city":"Durant, MS","bortle":3,"siteType":"State Park","siteURL":"https://www.mdwfp.com/fishing-boating/lakes/english-and-odom-lakes-holmes-county-state-park","why":"Bortle Class 3; State Park"},{"rank":40,"state":"Louisiana","abbr":"LA","prob":1.21,"odds":"+8171","b1":0,"b2":2,"b3":7,"dsp":11,"clear":103.0,"fire":392,"obs":3,"cert":0,"elev":100,"site":"Tensas River National Wildlife Refuge","city":"Tallulah, LA","bortle":2,"siteType":"Wildlife Refuge/Reserve","siteURL":"https://www.fws.gov/refuge/tensas-river","why":"Bortle Class 2; Wildlife Refuge/Reserve"},{"rank":41,"state":"Indiana","abbr":"IN","prob":1.12,"odds":"+8839","b1":0,"b2":0,"b3":0,"dsp":0,"clear":85.2,"fire":808,"obs":12,"cert":1,"elev":700,"site":"Shades State Park","city":"Waveland, IN","bortle":4,"siteType":"Observatory","siteURL":"https://www.in.gov/dnr/state-parks/parks-lakes/shades-state-park","why":"Observatory"},{"rank":42,"state":"New Jersey","abbr":"NJ","prob":1.08,"odds":"+9140","b1":0,"b2":0,"b3":0,"dsp":0,"clear":93.5,"fire":817,"obs":6,"cert":0,"elev":250,"site":"Belleplain State Forest","city":"Woodbine, NJ","bortle":5,"siteType":"Observatory","siteURL":"https://dep.nj.gov/parksandforests/state-park/belleplain-state-forest/","why":"Observatory"},{"rank":43,"state":"New Hampshire","abbr":"NH","prob":1.06,"odds":"+9352","b1":1,"b2":10,"b3":0,"dsp":24,"clear":67.0,"fire":398,"obs":2,"cert":0,"elev":1000,"site":"Umbagog Lake State Park","city":"Errol, NH","bortle":1,"siteType":"State Park","siteURL":"https://www.nhstateparks.org/find-parks-trails/umbagog-lake-state-park","why":"Bortle Class 1; State Park"},{"rank":44,"state":"Connecticut","abbr":"CT","prob":1.0,"odds":"+9903","b1":0,"b2":0,"b3":0,"dsp":0,"clear":90.5,"fire":647,"obs":9,"cert":0,"elev":500,"site":"Macedonia Brook State Park","city":"Kent, CT","bortle":4,"siteType":"Observatory","siteURL":"https://ctparks.com/parks/macedonia-brook-state-park","why":"Observatory"},{"rank":45,"state":"Kentucky","abbr":"KY","prob":0.95,"odds":"+10433","b1":0,"b2":0,"b3":2,"dsp":2,"clear":89.0,"fire":615,"obs":3,"cert":1,"elev":750,"site":"Buckhorn Lake State Resort Park","city":"Buckhorn, KY","bortle":3,"siteType":"State Park","siteURL":"https://parks.ky.gov/buckhorn/parks/resort/buckhorn-lake-state-resort-park","why":"Bortle Class 3; State Park"},{"rank":46,"state":"West Virginia","abbr":"WV","prob":0.86,"odds":"+11541","b1":0,"b2":8,"b3":1,"dsp":17,"clear":59.0,"fire":348,"obs":7,"cert":1,"elev":1500,"site":"Beartown State Park","city":"Hillsboro, WV","bortle":2,"siteType":"State Park","siteURL":"https://wvstateparks.com/park/beartown-state-park/","why":"Bortle Class 2; State Park"},{"rank":47,"state":"North Dakota","abbr":"ND","prob":0.86,"odds":"+11588","b1":0,"b2":1,"b3":5,"dsp":7,"clear":91.3,"fire":147,"obs":2,"cert":0,"elev":1900,"site":"Beaver Lake State Park","city":"Wishek, ND","bortle":2,"siteType":"State Park","siteURL":"https://www.parkrec.nd.gov/beaver-lake-state-park","why":"Bortle Class 2; State Park"},{"rank":48,"state":"Rhode Island","abbr":"RI","prob":0.75,"odds":"+13256","b1":0,"b2":0,"b3":0,"dsp":0,"clear":98.0,"fire":241,"obs":4,"cert":0,"elev":200,"site":"Beavertail State Park","city":"Jamestown, RI","bortle":4,"siteType":"Observatory","siteURL":"https://riparks.ri.gov/parks/beavertail-state-park","why":"Observatory"},{"rank":49,"state":"Delaware","abbr":"DE","prob":0.66,"odds":"+15149","b1":0,"b2":0,"b3":0,"dsp":0,"clear":97.0,"fire":221,"obs":1,"cert":0,"elev":60,"site":"Delaware Seashore State Park","city":"Rehoboth Beach, DE","bortle":4,"siteType":null,"siteURL":"https://www.destateparks.com/park/delaware-seashore/","why":null},{"rank":50,"state":"Vermont","abbr":"VT","prob":0.61,"odds":"+16371","b1":0,"b2":8,"b3":0,"dsp":16,"clear":58.0,"fire":266,"obs":2,"cert":0,"elev":1000,"site":"Big Deer State Park","city":"Groton, VT","bortle":2,"siteType":"State Park","siteURL":"https://vtstateparks.com/bigdeer.html","why":"Bortle Class 2; State Park"}];
+const AN_STATES = [{"rank":1,"state":"California","abbr":"CA","prob":7.34,"odds":"+1262","b1":7,"b2":32,"b3":0,"dsp":92,"clear":174.4,"fire":2897,"obs":45,"cert":6,"elev":2900,"site":"Death Valley National Park","city":"Furnace Creek, CA","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/deva/index.htm","why":"Bortle Class 1; National Park","take":"No state offers more ways to see a meteor: California pairs the country's most fireball reports with its deepest bench of dark skies, 39 sites rated Bortle Class 1 or 2."},{"rank":2,"state":"Arizona","abbr":"AZ","prob":5.14,"odds":"+1844","b1":1,"b2":7,"b3":0,"dsp":18,"clear":197.0,"fire":981,"obs":48,"cert":26,"elev":4100,"site":"Grand Canyon National Park (South Rim)","city":"Tusayan, AZ","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/grca/index.htm","why":"Bortle Class 1; National Park","take":"Arizona is the country's most reliable sky, with 197 clear days a year and 48 observatories, both national highs."},{"rank":3,"state":"Utah","abbr":"UT","prob":4.54,"odds":"+2105","b1":6,"b2":18,"b3":0,"dsp":60,"clear":138.0,"fire":551,"obs":5,"cert":28,"elev":6100,"site":"Canyonlands National Park","city":"Moab, UT","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/cany/index.htm","why":"Bortle Class 1; National Park","take":"Utah has certified more dark-sky places than any state in the country, 28 in all, and watches from a 6,100-foot average elevation."},{"rank":4,"state":"Texas","abbr":"TX","prob":4.16,"odds":"+2302","b1":2,"b2":11,"b3":3,"dsp":33,"clear":129.7,"fire":1907,"obs":14,"cert":21,"elev":1700,"site":"Big Bend National Park","city":"Terlingua, TX","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/bibe/index.htm","why":"Bortle Class 1; National Park","take":"Texas is where space rocks actually arrive: 11 witnessed meteorite falls, the most in NASA's archive, plus the second-most fireball reports in the country."},{"rank":5,"state":"Colorado","abbr":"CO","prob":4.08,"odds":"+2349","b1":2,"b2":17,"b3":0,"dsp":42,"clear":133.0,"fire":929,"obs":7,"cert":22,"elev":6800,"site":"Dinosaur National Monument","city":"Dinosaur, CO","bortle":1,"siteType":"National Monument","siteURL":"https://www.nps.gov/dino/planyourvisit/stargazing.htm","why":"Bortle Class 1; National Monument","take":"Colorado watches from the country's highest average elevation, 6,800 feet, with 22 DarkSky-certified places spread beneath it."},{"rank":6,"state":"New Mexico","abbr":"NM","prob":3.93,"odds":"+2448","b1":4,"b2":13,"b3":0,"dsp":42,"clear":165.7,"fire":446,"obs":13,"cert":9,"elev":5700,"site":"Clayton Lake State Park and Dinosaur Trackways","city":"Clayton, NM","bortle":1,"siteType":"State Park","siteURL":"https://www.emnrd.nm.gov/spd/find-a-park/clayton-lake-state-park-and-dinosaur-trackways/","why":"Bortle Class 1; State Park","take":"New Mexico's high desert delivers the third-most clear nights in the country, 166 a year, over four Bortle Class 1 skies."},{"rank":7,"state":"Oregon","abbr":"OR","prob":3.59,"odds":"+2688","b1":7,"b2":25,"b3":0,"dsp":78,"clear":91.8,"fire":681,"obs":4,"cert":8,"elev":3300,"site":"Bates State Park","city":"Prairie City, OR","bortle":1,"siteType":"State Park","siteURL":"https://stateparks.oregon.gov/index.cfm?do=park.profile&parkId=109","why":"Bortle Class 1; State Park","take":"Oregon ties California for the most Bortle Class 1 sites in the Lower 48, seven each; only the Pacific Northwest weather keeps it out of the top five."},{"rank":8,"state":"Nevada","abbr":"NV","prob":3.02,"odds":"+3215","b1":5,"b2":6,"b3":0,"dsp":32,"clear":153.4,"fire":475,"obs":1,"cert":2,"elev":5500,"site":"Great Basin National Park","city":"Baker, NV","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/grba/index.htm","why":"Bortle Class 1; National Park","take":"Nevada ranks fourth in the country for clear nights and holds five Bortle Class 1 skies, proof that emptiness is a stargazing asset."},{"rank":9,"state":"Michigan","abbr":"MI","prob":2.38,"odds":"+4103","b1":1,"b2":20,"b3":0,"dsp":44,"clear":68.6,"fire":1024,"obs":12,"cert":5,"elev":900,"site":"Muskallonge Lake State Park","city":"Newberry, MI","bortle":1,"siteType":"State Park","siteURL":"https://www.michigan.gov/dnr/places/state-parks/muskallonge-lake","why":"Bortle Class 1; State Park","take":"Michigan is the only state east of the Mississippi to crack the top 10, on the strength of 1,024 fireball reports and a rare eastern Bortle Class 1 sky."},{"rank":10,"state":"Oklahoma","abbr":"OK","prob":2.3,"odds":"+4241","b1":1,"b2":5,"b3":9,"dsp":23,"clear":133.0,"fire":644,"obs":4,"cert":1,"elev":1300,"site":"Black Mesa State Park and Nature Preserve","city":"Kenton, OK","bortle":1,"siteType":"State Park","siteURL":"https://www.travelok.com/state-parks/black-mesa-state-park-nature-preserve","why":"Bortle Class 1; State Park","take":"Oklahoma's panhandle puts a genuine Bortle Class 1 sky under 133 clear nights a year, enough to close out the national top 10."},{"rank":11,"state":"Kansas","abbr":"KS","prob":2.23,"odds":"+4376","b1":0,"b2":11,"b3":0,"dsp":22,"clear":130.6,"fire":499,"obs":8,"cert":0,"elev":2000,"site":"Cedar Bluff State Park","city":"Ellis, KS","bortle":2,"siteType":"State Park","siteURL":"https://www.ksoutdoors.gov/about-kdwp/where-we-work/state-parks/cedar-bluff","why":"Bortle Class 2; State Park","take":"Kansas ranks 11th without a single Bortle Class 1 site, and the heaviest witnessed meteorite in NASA's archive, the 1,100-kilogram Norton County stone, landed there in 1948."},{"rank":12,"state":"Idaho","abbr":"ID","prob":2.18,"odds":"+4494","b1":3,"b2":9,"b3":0,"dsp":30,"clear":105.7,"fire":368,"obs":1,"cert":4,"elev":5000,"site":"Central Idaho Dark Sky Reserve","city":"Stanley, ID","bortle":1,"siteType":"National Forest","siteURL":"https://idahodarksky.org/","why":"Bortle Class 1; National Forest","take":"Idaho's Central Idaho Dark Sky Reserve was the first of its kind in the nation, anchoring a state that watches from 5,000 feet."},{"rank":13,"state":"Alaska","abbr":"AK","prob":2.15,"odds":"+4540","b1":13,"b2":9,"b3":0,"dsp":70,"clear":60.2,"fire":177,"obs":1,"cert":0,"elev":1900,"site":"Denali National Park and Preserve","city":"Healy, AK","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/dena/index.htm","why":"Bortle Class 1; National Park","take":"Alaska owns more Bortle Class 1 skies than any state, 13 of them; only 60 clear nights a year keep it out of the top 10."},{"rank":14,"state":"Florida","abbr":"FL","prob":2.1,"odds":"+4671","b1":0,"b2":3,"b3":1,"dsp":7,"clear":97.0,"fire":1889,"obs":6,"cert":3,"elev":100,"site":"Big Cypress National Preserve","city":"Ochopee, FL","bortle":2,"siteType":"National Park","siteURL":"https://www.nps.gov/bicy/planyourvisit/astronomy-programs.htm","why":"Bortle Class 2; National Park","take":"Florida files the third-most fireball reports in the country, 1,889 since 2021, all from barely above sea level."},{"rank":15,"state":"Pennsylvania","abbr":"PA","prob":2.07,"odds":"+4723","b1":0,"b2":2,"b3":17,"dsp":21,"clear":79.3,"fire":1426,"obs":14,"cert":1,"elev":1100,"site":"Cherry Springs State Park","city":"Coudersport, PA","bortle":2,"siteType":"State Park","siteURL":"https://www.dcnr.pa.gov/StateParks/FindAPark/CherrySpringsStatePark/Pages/Stargazing.aspx","why":"Bortle Class 2; State Park","take":"Pennsylvania's Cherry Springs State Park remains the East Coast's most famous dark-sky destination, and the state's 1,426 fireball reports rank fourth nationally."},{"rank":16,"state":"North Carolina","abbr":"NC","prob":2.07,"odds":"+4729","b1":0,"b2":3,"b3":3,"dsp":9,"clear":108.0,"fire":1298,"obs":7,"cert":5,"elev":700,"site":"Earth to Sky Park","city":"Burnsville, NC","bortle":2,"siteType":"State Park","siteURL":"https://www.mayland.edu/foundation/foundation-projects/earth-to-sky-park/","why":"Bortle Class 2; State Park","take":"North Carolina has the second-most witnessed meteorite falls in NASA's archive, nine, including the 1810 Caswell County fall, the earliest in the dataset."},{"rank":17,"state":"New York","abbr":"NY","prob":2.04,"odds":"+4808","b1":0,"b2":1,"b3":17,"dsp":19,"clear":75.0,"fire":1419,"obs":21,"cert":0,"elev":1000,"site":"Adirondack Park","city":"Tupper Lake, NY","bortle":2,"siteType":"Observatory","siteURL":"https://apa.ny.gov/about_park/index.html","why":"Bortle Class 2; Observatory","take":"New York quietly runs 21 observatories, fourth-most in the country, and its 1,419 fireball reports rank fifth."},{"rank":18,"state":"Virginia","abbr":"VA","prob":2.04,"odds":"+4814","b1":0,"b2":4,"b3":4,"dsp":12,"clear":105.0,"fire":1136,"obs":6,"cert":6,"elev":950,"site":"James River State Park","city":"Gladstone, VA","bortle":2,"siteType":"State Park","siteURL":"https://www.dcr.virginia.gov/state-parks/james-river","why":"Bortle Class 2; State Park","take":"Virginia's fireball count ranks in the national top 10, and its four witnessed falls include one as recent as 2010 in Lorton."},{"rank":19,"state":"Minnesota","abbr":"MN","prob":1.99,"odds":"+4919","b1":1,"b2":15,"b3":0,"dsp":34,"clear":86.2,"fire":680,"obs":9,"cert":1,"elev":1200,"site":"Judge C.R. Magney State Park","city":"Grand Marais, MN","bortle":1,"siteType":"State Park","siteURL":"https://www.dnr.state.mn.us/state_parks/park.html?id=spk00193","why":"Bortle Class 1; State Park","take":"Minnesota hides a genuine Bortle Class 1 sky on Lake Superior's North Shore and ranks eighth in the country for dark-sky points."},{"rank":20,"state":"Hawaii","abbr":"HI","prob":1.98,"odds":"+4945","b1":2,"b2":12,"b3":0,"dsp":32,"clear":78.2,"fire":257,"obs":28,"cert":0,"elev":3030,"site":"Manuk\u0101 State Wayside","city":"Ocean View, HI","bortle":1,"siteType":"State Park","siteURL":"https://dlnr.hawaii.gov/dsp/parks/hawaii/manuka-state-wayside/","why":"Bortle Class 1; State Park","take":"Hawaii's 28 observatories trail only Arizona and California, and its watch from 3,000 feet includes two Bortle Class 1 skies."},{"rank":21,"state":"Wyoming","abbr":"WY","prob":1.78,"odds":"+5533","b1":2,"b2":4,"b3":0,"dsp":16,"clear":105.5,"fire":182,"obs":3,"cert":3,"elev":6700,"site":"Yellowstone National Park","city":"West Yellowstone, MT","bortle":1,"siteType":"National Park","siteURL":"https://www.nps.gov/yell/index.htm","why":"Bortle Class 1; National Park","take":"Wyoming watches from the second-highest average elevation in the country, 6,700 feet, with Yellowstone's Bortle Class 1 sky as its anchor."},{"rank":22,"state":"Georgia","abbr":"GA","prob":1.77,"odds":"+5552","b1":0,"b2":2,"b3":5,"dsp":9,"clear":110.2,"fire":945,"obs":8,"cert":1,"elev":600,"site":"Stephen C. Foster State Park","city":"Fargo, GA","bortle":2,"siteType":"State Park","siteURL":"https://gastateparks.org/StephenCFoster","why":"Bortle Class 2; State Park","take":"Georgia's 945 fireball reports rank 12th nationally, and the Okefenokee's Stephen C. Foster State Park gives the Southeast a true Bortle Class 2 sky."},{"rank":23,"state":"South Dakota","abbr":"SD","prob":1.77,"odds":"+5557","b1":1,"b2":13,"b3":0,"dsp":30,"clear":105.2,"fire":184,"obs":2,"cert":0,"elev":2200,"site":"Black Hills National Forest","city":"Custer, SD","bortle":1,"siteType":"National Forest","siteURL":"https://www.fs.usda.gov/blackhills","why":"Bortle Class 1; National Forest","take":"South Dakota's Black Hills hold a genuine Bortle Class 1 sky, and the state ranks 14th in the country for dark-sky points despite just two observatories."},{"rank":24,"state":"Washington","abbr":"WA","prob":1.71,"odds":"+5735","b1":0,"b2":14,"b3":0,"dsp":28,"clear":71.2,"fire":907,"obs":8,"cert":0,"elev":1700,"site":"Mount Rainier National Park","city":"Ashford, WA","bortle":2,"siteType":"National Park","siteURL":"https://www.nps.gov/mora/index.htm","why":"Bortle Class 2; National Park","take":"Washington is a top-15 fireball state, 907 reports since 2021, though roughly 71 clear nights a year cap how often anyone sees them."},{"rank":25,"state":"Montana","abbr":"MT","prob":1.64,"odds":"+6001","b1":4,"b2":8,"b3":0,"dsp":32,"clear":80.2,"fire":319,"obs":1,"cert":2,"elev":3400,"site":"Painted Rocks State Park","city":"Darby, MT","bortle":1,"siteType":"State Park","siteURL":"https://fwp.mt.gov/stateparks/painted-rocks","why":"Bortle Class 1; State Park","take":"Montana holds four Bortle Class 1 skies, seventh-most in the country, under Big Sky Country's 3,400-foot average elevation."},{"rank":26,"state":"Nebraska","abbr":"NE","prob":1.64,"odds":"+6011","b1":2,"b2":1,"b3":3,"dsp":13,"clear":116.4,"fire":257,"obs":6,"cert":1,"elev":2600,"site":"Valentine National Wildlife Refuge","city":"Valentine, NE","bortle":1,"siteType":"Wildlife Refuge/Reserve","siteURL":"https://www.fws.gov/refuge/valentine","why":"Bortle Class 1; Wildlife Refuge/Reserve","take":"Nebraska's Sandhills hide two Bortle Class 1 skies, including Valentine National Wildlife Refuge, under 116 clear nights a year, 11th-most in the country."},{"rank":27,"state":"Illinois","abbr":"IL","prob":1.61,"odds":"+6096","b1":0,"b2":1,"b3":5,"dsp":7,"clear":98.3,"fire":1022,"obs":5,"cert":4,"elev":600,"site":"Middle Fork River Forest Preserve","city":"Penfield, IL","bortle":2,"siteType":"State Forest","siteURL":"https://www.ccfpd.org/Forest-Preserves/Middle-Fork-River/International-Dark-Sky-Park","why":"Bortle Class 2; State Forest","take":"Illinois files the 10th-most fireball reports in the country and still offers a Bortle Class 2 escape at Middle Fork River Forest Preserve."},{"rank":28,"state":"Missouri","abbr":"MO","prob":1.52,"odds":"+6479","b1":0,"b2":2,"b3":0,"dsp":4,"clear":110.0,"fire":768,"obs":6,"cert":2,"elev":800,"site":"Current River State Park","city":"Salem, MO","bortle":2,"siteType":"State Park","siteURL":"https://mostateparks.com/park/current-river-state-park","why":"Bortle Class 2; State Park","take":"Missouri has seven witnessed meteorite falls, tied for third-most in NASA's archive, a legacy that outruns its No. 28 spotting rank."},{"rank":29,"state":"Tennessee","abbr":"TN","prob":1.51,"odds":"+6520","b1":0,"b2":1,"b3":4,"dsp":6,"clear":103.0,"fire":856,"obs":5,"cert":2,"elev":900,"site":"Obed Wild and Scenic River","city":"Wartburg, TN","bortle":2,"siteType":"National Preserve/Reserve","siteURL":"https://www.nps.gov/obed/index.htm","why":"Bortle Class 2; National Preserve/Reserve","take":"Tennessee's 856 fireball reports rank 16th nationally, and the Obed Wild and Scenic River protects the state's darkest public sky."},{"rank":30,"state":"Massachusetts","abbr":"MA","prob":1.48,"odds":"+6656","b1":0,"b2":0,"b3":3,"dsp":3,"clear":94.0,"fire":865,"obs":20,"cert":0,"elev":500,"site":"Kenneth Dubuque Memorial State Forest","city":"Hawley, MA","bortle":3,"siteType":"State Forest","siteURL":"https://www.mass.gov/locations/kenneth-dubuque-memorial-state-forest","why":"Bortle Class 3; State Forest","take":"Massachusetts owns 20 observatories, fifth-most in the country, aimed through some of its most light-polluted skies: all telescopes, little darkness."},{"rank":31,"state":"Arkansas","abbr":"AR","prob":1.47,"odds":"+6692","b1":0,"b2":3,"b3":0,"dsp":6,"clear":121.0,"fire":483,"obs":3,"cert":1,"elev":650,"site":"Cossatot River State Park\u2013Natural Area","city":"Wickes, AR","bortle":2,"siteType":"State Park","siteURL":"https://www.arkansasstateparks.com/parks/cossatot-river-state-park-natural-area","why":"Bortle Class 2; State Park","take":"Arkansas has six witnessed meteorite falls, including the 408-kilogram Paragould stone of 1930, the second-heaviest in NASA's archive."},{"rank":32,"state":"Wisconsin","abbr":"WI","prob":1.46,"odds":"+6753","b1":0,"b2":4,"b3":6,"dsp":14,"clear":89.8,"fire":797,"obs":6,"cert":0,"elev":1050,"site":"Big Bay State Park","city":"La Pointe, WI","bortle":2,"siteType":"State Park","siteURL":"https://dnr.wisconsin.gov/topic/parks/bigbay","why":"Bortle Class 2; State Park","take":"Wisconsin's three witnessed falls include Mifflin in 2010, one of the archive's most recent, and Big Bay State Park keeps a Bortle Class 2 sky on Lake Superior."},{"rank":33,"state":"Iowa","abbr":"IA","prob":1.41,"odds":"+7016","b1":0,"b2":1,"b3":12,"dsp":14,"clear":98.0,"fire":473,"obs":7,"cert":0,"elev":1100,"site":"Nine Eagles State Park","city":"Davis City, IA","bortle":2,"siteType":"State Park","siteURL":"https://iowastateparks.reserveamerica.com/camping/nine-eagles-state-park/r/campgroundDetails.do?contractCode=IA&parkId=610128","why":"Bortle Class 2; State Park","take":"Iowa's four witnessed falls include the 320-kilogram Estherville meteorite of 1879, the third-heaviest in NASA's archive."},{"rank":34,"state":"South Carolina","abbr":"SC","prob":1.34,"odds":"+7352","b1":0,"b2":0,"b3":3,"dsp":3,"clear":112.7,"fire":697,"obs":3,"cert":0,"elev":350,"site":"Francis Marion National Forest","city":"McClellanville, SC","bortle":3,"siteType":"National Forest","siteURL":"https://www.fs.usda.gov/scnfs/","why":"Bortle Class 3; National Forest","take":"South Carolina ranks 12th in the country for clear nights, 113 a year; its darkest listed sky, Francis Marion National Forest, rates Bortle Class 3."},{"rank":35,"state":"Maine","abbr":"ME","prob":1.34,"odds":"+7366","b1":1,"b2":10,"b3":0,"dsp":24,"clear":80.0,"fire":435,"obs":3,"cert":2,"elev":600,"site":"Katahdin Woods and Waters National Monument","city":"Patten, ME","bortle":2,"siteType":"Observatory","siteURL":"https://www.nps.gov/kaww/planyourvisit/stargazing.htm","why":"Bortle Class 1; Observatory","take":"Maine's four witnessed meteorite falls are the most in New England, and Katahdin Woods and Waters gives the region a truly dark sky."},{"rank":36,"state":"Alabama","abbr":"AL","prob":1.31,"odds":"+7509","b1":0,"b2":3,"b3":3,"dsp":9,"clear":102.0,"fire":632,"obs":3,"cert":0,"elev":500,"site":"Bladon Springs State Park","city":"Bladon Springs, AL","bortle":2,"siteType":"State Park","siteURL":"https://www.alapark.com/parks/bladon-springs-state-park","why":"Bortle Class 2; State Park","take":"Alabama's six witnessed falls include the 1954 Sylacauga meteorite, the one that famously struck a Talladega County woman in her home."},{"rank":37,"state":"Ohio","abbr":"OH","prob":1.31,"odds":"+7540","b1":0,"b2":0,"b3":4,"dsp":4,"clear":71.6,"fire":1232,"obs":11,"cert":2,"elev":850,"site":"Observatory Park","city":"Montville, OH","bortle":3,"siteType":"State Park","siteURL":"https://geaugaparkdistrict.org/park/observatory-park/","why":"Bortle Class 3; State Park","take":"Ohio files the seventh-most fireball reports in the country, 1,232 since 2021, and even named a park for the hobby: Observatory Park, its darkest listed site."},{"rank":38,"state":"Maryland","abbr":"MD","prob":1.23,"odds":"+8008","b1":0,"b2":0,"b3":2,"dsp":2,"clear":105.0,"fire":760,"obs":3,"cert":0,"elev":350,"site":"Point Lookout State Park","city":"Scotland, MD","bortle":3,"siteType":"State Park","siteURL":"https://dnr.maryland.gov/publiclands/Pages/southern/pointlookout.aspx","why":"Bortle Class 3; State Park","take":"Maryland's two witnessed falls date back to Nanjemoy in 1825, among the earliest in NASA's archive, though its darkest listed sky today rates Bortle Class 3."},{"rank":39,"state":"Mississippi","abbr":"MS","prob":1.22,"odds":"+8077","b1":0,"b2":0,"b3":6,"dsp":6,"clear":112.7,"fire":321,"obs":5,"cert":0,"elev":300,"site":"Holmes County State Park","city":"Durant, MS","bortle":3,"siteType":"State Park","siteURL":"https://www.mdwfp.com/fishing-boating/lakes/english-and-odom-lakes-holmes-county-state-park","why":"Bortle Class 3; State Park","take":"Mississippi's 113 clear nights a year rank 13th in the country; the missing ingredient is darkness, not weather."},{"rank":40,"state":"Louisiana","abbr":"LA","prob":1.21,"odds":"+8171","b1":0,"b2":2,"b3":7,"dsp":11,"clear":103.0,"fire":392,"obs":3,"cert":0,"elev":100,"site":"Tensas River National Wildlife Refuge","city":"Tallulah, LA","bortle":2,"siteType":"Wildlife Refuge/Reserve","siteURL":"https://www.fws.gov/refuge/tensas-river","why":"Bortle Class 2; Wildlife Refuge/Reserve","take":"Louisiana's lone witnessed fall landed in New Orleans itself in 2003, a 19-kilogram meteorite in one of the least likely spotting states."},{"rank":41,"state":"Indiana","abbr":"IN","prob":1.12,"odds":"+8839","b1":0,"b2":0,"b3":0,"dsp":0,"clear":85.2,"fire":808,"obs":12,"cert":1,"elev":700,"site":"Shades State Park","city":"Waveland, IN","bortle":4,"siteType":"Observatory","siteURL":"https://www.in.gov/dnr/state-parks/parks-lakes/shades-state-park","why":"Observatory","take":"Indiana has a dozen observatories, 10th-most in the country, but not one site rated Bortle Class 1, 2, or 3: plenty of telescopes, no dark sky."},{"rank":42,"state":"New Jersey","abbr":"NJ","prob":1.08,"odds":"+9140","b1":0,"b2":0,"b3":0,"dsp":0,"clear":93.5,"fire":817,"obs":6,"cert":0,"elev":250,"site":"Belleplain State Forest","city":"Woodbine, NJ","bortle":5,"siteType":"Observatory","siteURL":"https://dep.nj.gov/parksandforests/state-park/belleplain-state-forest/","why":"Observatory","take":"New Jersey's 817 fireball reports crack the national top 17 even though the state has no listed site darker than Bortle Class 5."},{"rank":43,"state":"New Hampshire","abbr":"NH","prob":1.06,"odds":"+9352","b1":1,"b2":10,"b3":0,"dsp":24,"clear":67.0,"fire":398,"obs":2,"cert":0,"elev":1000,"site":"Umbagog Lake State Park","city":"Errol, NH","bortle":1,"siteType":"State Park","siteURL":"https://www.nhstateparks.org/find-parks-trails/umbagog-lake-state-park","why":"Bortle Class 1; State Park","take":"New Hampshire owns a genuine Bortle Class 1 sky at Umbagog Lake yet ranks just 43rd, held back by 67 clear nights a year, fourth-fewest in the country."},{"rank":44,"state":"Connecticut","abbr":"CT","prob":1.0,"odds":"+9903","b1":0,"b2":0,"b3":0,"dsp":0,"clear":90.5,"fire":647,"obs":9,"cert":0,"elev":500,"site":"Macedonia Brook State Park","city":"Kent, CT","bortle":4,"siteType":"Observatory","siteURL":"https://ctparks.com/parks/macedonia-brook-state-park","why":"Observatory","take":"Connecticut's nine observatories rank 13th in the country, and its lone witnessed fall, a 50-gram stone, landed in Stratford in 1974."},{"rank":45,"state":"Kentucky","abbr":"KY","prob":0.95,"odds":"+10433","b1":0,"b2":0,"b3":2,"dsp":2,"clear":89.0,"fire":615,"obs":3,"cert":1,"elev":750,"site":"Buckhorn Lake State Resort Park","city":"Buckhorn, KY","bortle":3,"siteType":"State Park","siteURL":"https://parks.ky.gov/buckhorn/parks/resort/buckhorn-lake-state-resort-park","why":"Bortle Class 3; State Park","take":"Kentucky has more witnessed meteorite falls than 43 other states, six in all, including the 86-kilogram Bath Furnace stone of 1902."},{"rank":46,"state":"West Virginia","abbr":"WV","prob":0.86,"odds":"+11541","b1":0,"b2":8,"b3":1,"dsp":17,"clear":59.0,"fire":348,"obs":7,"cert":1,"elev":1500,"site":"Beartown State Park","city":"Hillsboro, WV","bortle":2,"siteType":"State Park","siteURL":"https://wvstateparks.com/park/beartown-state-park/","why":"Bortle Class 2; State Park","take":"West Virginia sees just 59 clear nights a year, second-fewest in the country, yet still hides a Bortle Class 2 sky at Beartown State Park."},{"rank":47,"state":"North Dakota","abbr":"ND","prob":0.86,"odds":"+11588","b1":0,"b2":1,"b3":5,"dsp":7,"clear":91.3,"fire":147,"obs":2,"cert":0,"elev":1900,"site":"Beaver Lake State Park","city":"Wishek, ND","bortle":2,"siteType":"State Park","siteURL":"https://www.parkrec.nd.gov/beaver-lake-state-park","why":"Bortle Class 2; State Park","take":"North Dakota files the fewest fireball reports in the country, 147 since 2021, though the 90-kilogram Richardton fall of 1918 proves the sky delivers anyway."},{"rank":48,"state":"Rhode Island","abbr":"RI","prob":0.75,"odds":"+13256","b1":0,"b2":0,"b3":0,"dsp":0,"clear":98.0,"fire":241,"obs":4,"cert":0,"elev":200,"site":"Beavertail State Park","city":"Jamestown, RI","bortle":4,"siteType":"Observatory","siteURL":"https://riparks.ri.gov/parks/beavertail-state-park","why":"Observatory","take":"Rhode Island's best seat is a coastal one, Beavertail State Park, in a state with no site rated Bortle Class 1, 2, or 3."},{"rank":49,"state":"Delaware","abbr":"DE","prob":0.66,"odds":"+15149","b1":0,"b2":0,"b3":0,"dsp":0,"clear":97.0,"fire":221,"obs":1,"cert":0,"elev":60,"site":"Delaware Seashore State Park","city":"Rehoboth Beach, DE","bortle":4,"siteType":null,"siteURL":"https://www.destateparks.com/park/delaware-seashore/","why":null,"take":"Delaware is the hardest place in America to escape the light: zero dark-sky points, one observatory, and the lowest average elevation in the country."},{"rank":50,"state":"Vermont","abbr":"VT","prob":0.61,"odds":"+16371","b1":0,"b2":8,"b3":0,"dsp":16,"clear":58.0,"fire":266,"obs":2,"cert":0,"elev":1000,"site":"Big Deer State Park","city":"Groton, VT","bortle":2,"siteType":"State Park","siteURL":"https://vtstateparks.com/bigdeer.html","why":"Bortle Class 2; State Park","take":"Vermont is the longest shot in the country at +16371, with the fewest clear nights anywhere, 58 a year, but a genuine Bortle Class 2 consolation at Big Deer State Park."}];
 
 /* ---------- helpers ---------- */
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1384,7 +1400,7 @@ const AN_FALL_COUNTS = {"Texas":11,"North Carolina":9,"Kansas":7,"Missouri":7,"A
         p.style.fill = rec ? chanceFill(rec.prob) : 'rgba(255,255,255,.04)';
         const aria = rec
           ? name + ': No. ' + rec.rank + ', implied spotting chance ' + rec.prob.toFixed(2) + ' percent, Action Network odds ' + rec.odds +
-            ', ' + Math.round(rec.clear) + ' clear days, ' + rec.fire + ' fireballs, ' + rec.dsp + ' dark-sky points, ' +
+            ', ' + Math.round(rec.clear) + ' clear days, ' + rec.fire + ' fireballs, ' + rec.b1 + ', ' + rec.b2 + ', and ' + rec.b3 + ' Bortle Class 1, 2, and 3 sites, ' +
             rec.obs + ' observatories, ' + fmt(rec.elev) + ' feet average elevation' +
             (cnt ? ', ' + cnt + ' NASA recorded ' + (cnt===1?'fall':'falls') : '')
           : name + ': not ranked in this index';
@@ -1396,7 +1412,7 @@ const AN_FALL_COUNTS = {"Texas":11,"North Carolina":9,"Kansas":7,"Missouri":7,"A
             '<div class="an-maptip-grid">' +
               '<span class="c"><b>' + Math.round(rec.clear) + '</b><span>Clear days</span></span>' +
               '<span class="c"><b>' + fmt(rec.fire) + '</b><span>Fireballs</span></span>' +
-              '<span class="c"><b>' + fmt(rec.dsp) + '</b><span>Dark-sky pts</span></span>' +
+              '<span class="c"><b>' + rec.b1 + '/' + rec.b2 + '/' + rec.b3 + '</b><span>Bortle 1/2/3</span></span>' +
               '<span class="c"><b>' + rec.obs + '</b><span>Observatories</span></span>' +
               '<span class="c"><b>' + rec.cert + '</b><span>Certified</span></span>' +
               '<span class="c"><b>' + fmt(rec.elev) + '</b><span>Elev (ft)</span></span>' +
@@ -1611,6 +1627,7 @@ const tableView = document.getElementById('tableView');
 const searchWrap = document.getElementById('searchWrap');
 const searchBox = document.getElementById('stateSearch');
 const rowsNote = document.getElementById('rowsNote');
+const AN_VIEW_NOTE = 'Use the toggle to switch between the strike map and the full table.';
 let openAbbr = null;
 let tableCollapsed = true;
 const tableMoreBtn = document.getElementById('tableMore');
@@ -1628,7 +1645,7 @@ function rowHTML(s){
     <td class="num"><span class="an-odds-mini"><b>${esc(s.odds)}</b></span></td>
     <td class="num c-clear">${Math.round(s.clear)}</td>
     <td class="num c-fire">${fmt(s.fire)}</td>
-    <td class="num c-dsp">${fmt(s.dsp)}</td>
+    <td class="num c-dsp">${s.b1} / ${s.b2} / ${s.b3}</td>
     <td class="c-site" style="font-size:13.5px;line-height:1.4;">${esc(s.site)}</td>
     <td><span class="an-caret" aria-hidden="true"></span></td>
   </tr>` + (openAbbr===s.abbr ? detailHTML(s) : '');
@@ -1643,7 +1660,6 @@ const DS_ICONS = {
   fire:   '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="16.5" r="3"/><path d="M11 13l9-9M13.5 15.5L19 10M9.5 11.5L15 6"/></svg>',
   dsp:    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.5 3.2 3.5.4-2.6 2.4.7 3.4L12 10.9 8.9 12.4l.7-3.4L7 6.6l3.5-.4z"/><path d="M5.5 15l.9 1.9 2.1.3-1.5 1.4.4 2-1.9-1.1-1.9 1.1.4-2-1.5-1.4 2.1-.3z"/><path d="M17.5 15l.9 1.9 2.1.3-1.5 1.4.4 2-1.9-1.1-1.9 1.1.4-2-1.5-1.4 2.1-.3z"/></svg>'
 };
-const DSP_MAX = Math.max.apply(null, AN_STATES.map(x=>x.dsp));
 /* ---------- Key Findings: field-scaled diamond meters ---------- */
 (function(){
   const KF_MAX = Math.max.apply(null, AN_STATES.map(x=>x.prob));
@@ -1658,38 +1674,14 @@ const DSP_MAX = Math.max.apply(null, AN_STATES.map(x=>x.dsp));
     el.innerHTML = html;
   });
 })();
-/* Top 10 in Focus: add a clear-days chip from the table data */
-(function(){
-  const byName = {};
-  AN_STATES.forEach(s => byName[s.state] = s);
-  document.querySelectorAll('#sec-top10 .an-t10').forEach(card=>{
-    const nameEl = card.querySelector('.an-t10-name');
-    const s = nameEl && byName[nameEl.textContent.trim()];
-    if(!s) return;
-    const facts = card.querySelector('.an-t10-facts');
-    if(!facts || facts.querySelector('[data-clear]')) return;
-    const li = document.createElement('li');
-    li.setAttribute('data-clear','');
-    li.innerHTML = '<b>' + Math.round(s.clear) + '</b><span>Clear days / yr</span>';
-    /* insert after the Bortle chip: chance, odds, Bortle, then clear days */
-    facts.insertBefore(li, facts.children[3] || null);
-  });
-})();
 function detailHTML(s){
-  const w = s.dsp === 0 ? 0 : Math.max(3, Math.round(s.dsp / DSP_MAX * 1000) / 10);
   return `
   <tr class="detail"><td colspan="9">
     <div class="an-detail-inner">
       <div class="an-detail-left">
-        <div class="an-detail-site">
-          <h4>${esc(s.site)}</h4>
-          <p>${esc(s.siteType||'Public site')} near ${esc(s.city)} &middot; Bortle Class ${s.bortle} sky &middot; the darkest listed public site in ${esc(s.state)}. Nighttime access isn&#8217;t verified, so check before you travel.</p>
-        </div>
-        <div class="an-detail-dsp">
-          <i class="an-dsp-ico" aria-hidden="true">${DS_ICONS.dsp}</i>
-          <div class="an-dsp-copy"><b>${fmt(s.dsp)}</b><span>Dark-sky points</span></div>
-          <span class="an-dsp-cap">Top-weighted factor &middot; 30% of the index${s.dsp===DSP_MAX?' &middot; national high':''}</span>
-          <div class="an-dsp-meter" role="img" aria-label="${fmt(s.dsp)} dark-sky points, out of a national high of ${fmt(DSP_MAX)}"><i style="--w:${w}%"></i></div>
+        <div class="an-detail-take">
+          <div class="an-take-copy"><b class="an-take-label">The takeaway</b><span>${esc(s.take)}</span>
+          <span class="an-take-site"><b class="an-take-pre">Best viewing site:</b> <b>${esc(s.site)}</b>, a Bortle Class ${s.bortle} sky near ${esc(s.city)}.</span></div>
         </div>
       </div>
       <div class="an-detail-stats">
@@ -1717,9 +1709,7 @@ function renderTable(){
   } else {
     rankBody.innerHTML = visible.map(rowHTML).join('');
   }
-  rowsNote.textContent = q ? `Showing ${rows.length} match${rows.length===1?'':'es'}.`
-    : clip ? 'Top 10 of 50 states \u00b7 select a row for details.'
-    : 'All 50 states \u00b7 select a row for details.';
+  rowsNote.textContent = q ? `Showing ${rows.length} match${rows.length===1?'':'es'}.` : AN_VIEW_NOTE;
   if(tableMoreBtn){
     tableMoreBtn.hidden = !!q;
     tableMoreBtn.innerHTML = tableCollapsed ? 'Show all 50 states \u25BE' : 'Show top 10 only \u25B4';
@@ -1727,7 +1717,6 @@ function renderTable(){
   }
   requestAnimationFrame(()=>{
     rankBody.querySelectorAll('tr.rowmain').forEach(tr=>tr.classList.add('barfill'));
-    rankBody.querySelectorAll('.an-dsp-meter').forEach(m=>m.classList.add('fill'));
   });
 }
 
@@ -1754,7 +1743,7 @@ function setRankView(map){
   mapView.hidden = !map;
   tableView.hidden = map;
   searchWrap.hidden = map;
-  rowsNote.textContent = map ? 'Hover or tap any state for its rank, implied chance, and odds.' : 'All 50 states \u00b7 select a row for details.';
+  rowsNote.textContent = AN_VIEW_NOTE;
   if(!map) renderTable();
 }
 btnMap.addEventListener('click', ()=>setRankView(true));
@@ -1813,8 +1802,8 @@ const FB_METRICS = {
     val: s => s.clear, label: s => String(Math.round(s.clear))
   },
   dsp: {
-    note: "Weighted dark-sky points from the Bortle scale (1 = darkest sky, 9 = brightest): Class 1 sites count 4, Class 2 count 2, Class 3 count 1. This is the largest factor in the odds model at 30%.",
-    val: s => s.dsp, label: s => fmt(s.dsp)
+    note: "Each state's Bortle Class 1 / 2 / 3 dark-sky sites, the three darkest grades on the scale. Ranked by the odds model's weighted dark-sky points, its largest factor at 30%: Class 1 sites count 4, Class 2 count 2, Class 3 count 1.",
+    val: s => s.dsp, label: s => s.b1 + ' / ' + s.b2 + ' / ' + s.b3
   },
   elev: {
     note: "Mean state elevation, the smallest factor in the model at just 5%. Thin, dry air sharpens the view, but altitude alone can't carry a state.",
@@ -1937,7 +1926,7 @@ function anJump(el){
     el.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
   }
   if(inFrame){
-    try { window.parent.postMessage({ an_jump: y, an_section: el.id || null }, '*'); } catch(e) {}
+    try { window.parent.postMessage({ an_jump: y }, '*'); } catch(e) {}
   }
   /* corrective pass: long smooth scrolls can settle off-target if layout shifted */
   clearTimeout(anJump._t);
@@ -1958,42 +1947,6 @@ if(window.ResizeObserver){
   let hT;
   new ResizeObserver(()=>{ clearTimeout(hT); hT = setTimeout(anPostHeight, 200); }).observe(document.body);
 }
-
-/* ---------- deep links: #sec-... works standalone and via the parent-page relay ---------- */
-const AN_JUMP_IDS = ['sec-hero','sec-findings','sec-rankings','sec-top10','sec-fireballs','sec-meteorites','sec-method','sec-embed'];
-function anGoto(id, isRetry){
-  if(document.body.classList.contains('an-embed')) return;   /* single-section embeds have nothing to jump to */
-  if(AN_JUMP_IDS.indexOf(id) === -1) return;                 /* whitelist: ignore anything else posted at us */
-  const el = document.getElementById(id);
-  if(!el) return;
-  anJump(el);
-  /* late layout (d3 map, fonts, images) shifts targets after load; settle once more */
-  if(!isRetry) setTimeout(()=>anGoto(id, true), 900);
-}
-function anOwnHash(){
-  const id = (location.hash || '').replace('#','');
-  if(id) anGoto(id);
-}
-window.addEventListener('hashchange', anOwnHash);
-window.addEventListener('load', ()=>setTimeout(anOwnHash, 350));
-window.addEventListener('message', (e)=>{
-  const d = e.data;
-  if(d && typeof d.an_goto === 'string') anGoto(d.an_goto.replace('#',''));
-});
-/* no-script host relay: read the parent page's query string from document.referrer.
-   Referrers carry path + query (never the #fragment) under the host's referrer
-   policy, so article links use ?goto=rankings instead of #sec-rankings. */
-(function(){
-  if(!inFrame || !document.referrer) return;
-  let want = '';
-  try {
-    const q = new URL(document.referrer).searchParams;
-    want = (q.get('goto') || q.get('section') || '').toLowerCase();
-  } catch(e){ return; }
-  if(!want) return;
-  const id = want.indexOf('sec-') === 0 ? want : 'sec-' + want;
-  window.addEventListener('load', ()=>setTimeout(()=>anGoto(id), 600));
-})();
 
 /* ---------- editors: embed mode, snippets, PNG export ---------- */
 const AN_EMBEDS = {
@@ -2050,6 +2003,7 @@ function anCopyFallback(text, done){
 
 /* --- PNG export --- */
 const AN_CAPTURES = {
+  hero:        {sel:'#sec-hero .an-band-dark',   file:'headline-card',      bg:'#0d141b', prep:'hero'},
   map:         {sel:'.an-strike-panel',          file:'strike-map',         svg:true},
   table:       {sel:'.an-table-card',            file:'rankings-table',     bg:'#ffffff', prep:'table'},
   findings:    {sel:'.an-kf-grid',               file:'key-findings',       bg:'#ffffff'},
@@ -2146,12 +2100,15 @@ function anMapPNG(cfg, btn){
     bg.addColorStop(1, '#152630');
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
+    /* green accent rule */
+    ctx.fillStyle = '#00e09a';
+    ctx.fillRect(0, 0, 5, H);
     /* title block */
     ctx.fillStyle = '#ffffff';
     ctx.font = "900 34px 'Barlow Condensed', 'Arial Narrow', sans-serif";
     ctx.textBaseline = 'alphabetic';
     ctx.textAlign = 'center';
-    ctx.fillText('The 2026 Meteor Spotting Index', W / 2, 46);
+    ctx.fillText('The 2026 Asteroid Spotting Index', W / 2, 46);
     ctx.textAlign = 'left';
     const isChoropleth = !!svg.querySelector('.an-state-shape');
     ctx.textAlign = 'center';
@@ -2191,7 +2148,7 @@ function anMapPNG(cfg, btn){
     /* source credit */
     ctx.fillStyle = 'rgba(255,255,255,.45)';
     ctx.font = "700 12px 'Barlow Condensed', 'Arial Narrow', sans-serif";
-    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 METEOR SPOTTING INDEX';
+    const credit = 'SOURCE: ACTION NETWORK \u00b7 THE 2026 ASTEROID SPOTTING INDEX';
     ctx.fillText(credit, W - padX - ctx.measureText(credit).width, H - 18);
     URL.revokeObjectURL(url);
     anSaveBlob(c, cfg.file);
@@ -2205,6 +2162,10 @@ function anSectionPNG(key, btn){
   btn.dataset.orig = btn.textContent;
   btn.textContent = 'Rendering\u2026';
   if(cfg.svg){ anMapPNG(cfg, btn); return; }
+  if(cfg.prep === 'hero'){
+    if(chanceNum) chanceNum.textContent = HERO_CHANCE.toFixed(2) + '%';
+    if(oddsNum) oddsNum.textContent = '+' + HERO_ODDS;
+  }
   let restoreMapView = false, restoreCollapsed = false;
   if(cfg.prep === 'table'){
     if(tableView.hidden){ setRankView(false); restoreMapView = true; }
@@ -2385,6 +2346,17 @@ function anBackToTop(){
   bar.querySelector('button').addEventListener('click', anBackToTop);
   sec.appendChild(bar);
 });
+/* ---------- deep link: ?view=table lands writers on the full rankings table ---------- */
+(function(){
+  const q = new URLSearchParams(location.search);
+  if(q.get('embed')) return;
+  if((q.get('view') || '').toLowerCase() !== 'table') return;
+  setRankView(false);
+  if((q.get('rows') || '').toLowerCase() === 'all'){ tableCollapsed = false; renderTable(); }
+  window.addEventListener('load', ()=>{
+    setTimeout(()=>anJump(document.getElementById('sec-rankings')), 450);
+  }, {once:true});
+})();
 </script>
 </body>
 </html>
