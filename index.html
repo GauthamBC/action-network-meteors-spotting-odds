@@ -68,7 +68,9 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--an-green);outline-o
 .an-ek-btn.primary:hover{background:var(--an-green-dark);border-color:var(--an-green-dark);color:#fff;}
 .an-ek-btn.done{background:var(--an-green);border-color:var(--an-green);color:var(--an-navy);}
 .an-ek-dd{position:relative;}
-.an-ek-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:8;min-width:172px;background:#fff;border:1px solid var(--an-border-2);box-shadow:var(--an-shadow-strong);display:flex;flex-direction:column;}
+.an-ek{position:relative;}
+.an-ek:has(.an-ek-menu:not([hidden])){overflow:visible;z-index:40;}
+.an-ek-menu{position:absolute;top:calc(100% + 4px);left:0;z-index:50;min-width:172px;background:#fff;border:1px solid var(--an-border-2);box-shadow:var(--an-shadow-strong);display:flex;flex-direction:column;}
 .an-ek-menu button{text-align:left;font-family:var(--an-display);font-weight:700;font-size:13.5px;letter-spacing:.04em;padding:9px 14px;border:0;border-bottom:1px solid var(--an-border);background:#fff;color:var(--an-text);cursor:pointer;}
 .an-ek-menu[hidden]{display:none;}
 .an-ek-menu button:last-child{border-bottom:0;}
