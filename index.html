@@ -2536,9 +2536,20 @@ function anBackToTop(){
     targetId = 'sec-embed';
   }
   if(!targetId) return;
+  /* Retry the landing scroll a few times: in a CMS iframe, images and ads above
+     the frame keep shifting layout after our first jump, and a single attempt
+     can land stale. Retries stop the moment the reader scrolls on their own. */
+  let cancelled = false;
+  const cancel = ()=>{ cancelled = true; };
+  ['wheel','touchstart','keydown'].forEach(ev=>window.addEventListener(ev, cancel, {once:true, passive:true}));
+  const go = ()=>{ if(!cancelled) anJump(document.getElementById(targetId)); };
+  document.addEventListener('DOMContentLoaded', ()=>setTimeout(go, 400), {once:true});
   window.addEventListener('load', ()=>{
-    setTimeout(()=>anJump(document.getElementById(targetId)), 450);
+    setTimeout(go, 500);
+    setTimeout(go, 1600);
+    setTimeout(go, 3200);
   }, {once:true});
+  if(document.readyState === 'complete'){ setTimeout(go, 400); setTimeout(go, 1600); }
 })();
 </script>
 </body>
