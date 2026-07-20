@@ -1615,7 +1615,7 @@ anSyncSeps();
 const anMenuEl = document.getElementById('sectionMenu');
 document.querySelectorAll('.an-back-to-menu').forEach(btn=>{
   btn.addEventListener('click', ()=>{
-    anJump(anMenuEl);
+    anJump(anMenuEl, inFrame ? 84 : 12);   /* extra headroom so the menu clears the host page's fixed nav */
     if(!prefersReduced && anMenuEl){
       anMenuEl.classList.remove('flash');
       void anMenuEl.offsetWidth;
@@ -1677,13 +1677,13 @@ window.addEventListener('resize', ()=>{ clearTimeout(anFitT); anFitT = setTimeou
 
 /* ---------- iframe bridge: jump + auto-height ---------- */
 const inFrame = (() => { try { return window.parent !== window; } catch(e){ return true; } })();
-function anTargetY(el){
+function anTargetY(el, pad){
   const pageY = window.pageYOffset || document.documentElement.scrollTop || 0;
-  return Math.max(0, el.getBoundingClientRect().top + pageY - 6);
+  return Math.max(0, el.getBoundingClientRect().top + pageY - (pad == null ? 6 : pad));
 }
-function anJump(el){
+function anJump(el, pad){
   if(!el) return;
-  const y = anTargetY(el);
+  const y = anTargetY(el, pad);
   const scrollsInternally = document.documentElement.scrollHeight > window.innerHeight + 4;
   if(scrollsInternally){
     window.scrollTo({top:y, behavior: prefersReduced ? 'auto' : 'smooth'});
