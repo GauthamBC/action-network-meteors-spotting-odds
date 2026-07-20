@@ -8,6 +8,7 @@
 <link rel="canonical" href="https://www.actionnetwork.com/entertainment/where-in-america-are-you-most-likely-to-spot-a-meteor">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://i.postimg.cc">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -228,6 +229,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--an-green);outline-o
 
 .an-table-card{background:#fff;border:1px solid var(--an-border);box-shadow:var(--an-shadow);overflow:hidden;position:relative;}
 .an-pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;border-top:1px solid var(--an-border);background:#fff;padding:12px 14px;}
+/* --- toolbar row above the table: mirrors the 40/60 split so the search bar is exactly as wide as the table header --- */
+.an-rktools{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);align-items:stretch;border-bottom:1px solid var(--an-border);background:#fff;}
+.an-rktools .an-search--list{margin:7px 10px;flex:none;width:auto;min-width:0;display:flex;}
+.an-rktools .an-search--list input{height:100%;}
+.an-rktools .an-pager{border-top:0;background:transparent;padding:7px clamp(12px,1.6vw,18px);justify-content:stretch;min-width:0;flex-wrap:nowrap;overflow-x:auto;gap:8px;}
+.an-rktools .an-pager button{flex:1 1 0;min-width:max-content;white-space:nowrap;padding:9px 12px;font-size:14px;text-align:center;}
+.an-rktools .an-pager .pg-step{flex:0 0 auto;font-size:18px;line-height:1;padding:8px 14px;}
 .an-pager button{font-family:var(--an-display);font-weight:800;font-size:14.5px;letter-spacing:.04em;border:1px solid var(--an-border-2);background:#fff;color:var(--an-navy);padding:8px 13px;cursor:pointer;transition:all .15s ease;}
 .an-pager button:hover:not(:disabled):not(.is-active){border-color:var(--an-green);color:var(--an-green-dark);background:var(--an-green-soft);}
 .an-pager button.is-active{background:var(--an-navy);border-color:var(--an-navy);color:var(--an-green-bright);cursor:default;}
@@ -237,6 +245,12 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--an-green);outline-o
   .an-pager{gap:4px;padding:10px 8px;}
   .an-pager button{font-size:12.5px;padding:7px 8px;letter-spacing:.02em;}
   .an-pager .pg-step{padding:7px 6px;}
+  .an-rktools .an-pager{padding:4px 10px;gap:4px;}
+  .an-rktools .an-pager button{font-size:11.5px;padding:7px 6px;letter-spacing:.01em;}
+  .an-rktools .an-pager .pg-step{font-size:15px;padding:6px 9px;}
+  .an-rktools .an-search--list{margin:5px 8px;}
+  .an-rktools .an-search--list input{font-size:13px;padding-left:31px;}
+  .an-rktools .an-search--list svg{left:10px;}
 }
 .an-pager[hidden]{display:none;}
 table.an-rank{width:100%;border-collapse:collapse;}
@@ -290,7 +304,9 @@ tr.barfill .an-chancebar i{width:var(--w);}
 .an-search--list input:focus{outline:none;}
 .an-search--list input::placeholder{color:var(--an-green-dark);opacity:.85;}
 .an-search--list svg{left:13px;stroke:var(--an-green-dark);}
-.an-rklist{display:flex;flex-direction:column;}
+.an-rklist{display:flex;flex-direction:column;flex:1 1 auto;}
+.an-rklist .an-rkitem{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;}
+.an-rklist .an-rkitem .an-rkrow{flex:1 1 auto;}
 .an-rkitem + .an-rkitem{border-top:1px solid var(--an-border);}
 .an-rkrow{display:flex;align-items:center;gap:11px;width:100%;text-align:left;background:#fff;border:0;border-left:6px solid transparent;padding:10px 12px 10px 9px;cursor:pointer;transition:background .15s ease,border-color .15s ease;}
 .an-rkrow:hover{background:var(--an-green-soft);border-left-color:rgba(0,182,122,.45);}
@@ -346,7 +362,7 @@ tr.barfill .an-chancebar i{width:var(--w);}
 .rkd-credit{position:absolute;left:0;right:0;bottom:0;margin:0;padding:14px 9px 5px;text-align:right;font-family:var(--an-display);font-weight:700;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.85);background:linear-gradient(180deg,rgba(7,13,19,0),rgba(7,13,19,.8));}
 /* --- full-bleed hero photo: 16:9 across the card, site info branded onto the bottom of the image --- */
 .rkd-media.has-photo{display:flex;flex-direction:column;flex:3 1 auto;min-height:0;}
-.rkd-media.has-photo .rkd-photo{flex:1 1 auto;min-height:210px;height:auto;aspect-ratio:auto;}
+.rkd-media.has-photo .rkd-photo{flex:1 1 auto;min-height:180px;height:auto;aspect-ratio:auto;}
 .rkd-media.has-photo .rkd-photo-cta{top:10px;right:10px;bottom:auto;}
 .rkd-media.has-photo .rkd-credit{top:0;bottom:auto;padding:6px 10px 16px;text-align:left;background:linear-gradient(180deg,rgba(7,13,19,.75),rgba(7,13,19,0));}
 .rkd-overlay{position:absolute;left:0;right:0;bottom:0;z-index:2;pointer-events:none;display:flex;flex-direction:column;gap:3px;padding:48px 16px 14px;background:linear-gradient(180deg,rgba(7,13,19,0) 0%,rgba(7,13,19,.58) 38%,rgba(7,13,19,.93) 100%);}
@@ -489,17 +505,17 @@ tr.barfill .an-chancebar i{width:var(--w);}
 .an-quote p{margin:0;font-family:var(--an-serif);font-style:italic;font-size:clamp(16.5px,1.4vw,19px);line-height:1.7;color:#28483c;}
 .an-quote cite{display:block;margin-top:11px;font-family:var(--an-display);font-style:normal;font-weight:800;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--an-green-dark);}
 .an-lb-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;margin:0 0 12px;}
-.an-tabs{display:flex;flex-wrap:wrap;margin:0;}
-.an-lb-dl{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-family:var(--an-display);font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--an-green-dark);background:#fff;border:1px solid var(--an-border-2);padding:10px 13px;cursor:pointer;transition:all .15s ease;white-space:nowrap;}
-.an-lb-dl:hover:not(:disabled){border-color:var(--an-green);background:var(--an-green-soft);}
+.an-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0;}
+.an-lb-dl{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-family:var(--an-display);font-weight:800;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--an-green-dark);background:#fff;border:1px solid var(--an-border-2);border-bottom:3px solid var(--an-green);box-shadow:0 3px 0 rgba(16,24,32,.08),0 10px 18px rgba(16,24,32,.07);padding:10px 13px;cursor:pointer;transition:all .15s ease;white-space:nowrap;}
+.an-lb-dl:hover:not(:disabled){border-color:var(--an-green);border-bottom-color:var(--an-green-dark);background:var(--an-green-soft);transform:translateY(-1px);box-shadow:0 4px 0 rgba(16,24,32,.12),0 12px 22px rgba(16,24,32,.1);}
 .an-lb-dl:disabled{opacity:.55;cursor:default;}
 .an-lb-dl svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 @media(max-width:600px){.an-lb-dl{flex:1 1 100%;justify-content:center;margin-left:0;}}
-.an-tabs button{font-family:var(--an-display);font-weight:800;font-size:15px;letter-spacing:.04em;padding:10px 18px;background:#fff;border:1px solid var(--an-border-2);border-right-width:0;color:var(--an-navy);cursor:pointer;transition:all .15s ease;}
-.an-tabs button:last-child{border-right-width:1px;}
-.an-tabs button:hover:not(.is-active){background:var(--an-green-soft);color:var(--an-green-dark);}
-.an-tabs button.is-active{background:var(--an-navy);border-color:var(--an-navy);color:#fff;}
-@media(max-width:600px){.an-tabs button{flex:1 1 auto;font-size:12.5px;padding:9px 6px;letter-spacing:.02em;}}
+.an-tabs button{font-family:var(--an-display);font-weight:800;font-size:15px;letter-spacing:.04em;padding:10px 18px;background:#fff;border:1px solid var(--an-border-2);border-bottom:3px solid var(--an-green);color:var(--an-navy);cursor:pointer;box-shadow:0 3px 0 rgba(16,24,32,.08),0 10px 18px rgba(16,24,32,.07);transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease,box-shadow .15s ease;}
+.an-tabs button:hover:not(.is-active){background:var(--an-green-soft);color:var(--an-green-dark);border-bottom-color:var(--an-green-dark);transform:translateY(-1px);box-shadow:0 4px 0 rgba(16,24,32,.12),0 12px 22px rgba(16,24,32,.1);}
+.an-tabs button:active:not(.is-active){transform:translateY(1px);box-shadow:0 1px 0 rgba(16,24,32,.1);}
+.an-tabs button.is-active{background:var(--an-navy);border-color:var(--an-navy);border-bottom-color:var(--an-green-bright);color:#fff;}
+@media(max-width:600px){.an-tabs{gap:6px;}.an-tabs button{flex:1 1 auto;font-size:12.5px;padding:9px 6px;letter-spacing:.02em;}}
 .an-lb{display:flex;flex-direction:column;gap:19px;}
 .lb-row{display:grid;grid-template-columns:1fr auto;grid-template-areas:"id val" "bar bar";gap:5px 12px;align-items:center;}
 .lb-id{grid-area:id;min-width:0;text-align:left;}
@@ -596,9 +612,9 @@ tr.barfill .an-chancebar i{width:var(--w);}
   <nav id="sectionMenu" class="an-jumpbar" aria-label="Jump to a section">
     <div class="an-jumpbar-track">
       <span class="an-jumpbar-label">Sections</span>
-      <button type="button" class="an-jump" data-jump="sec-top10">The Leaderboards</button>
-      <button type="button" class="an-jump" data-jump="sec-rankings">All 50 States</button>
-      <button type="button" class="an-jump" data-jump="sec-method">Methodology</button>
+      <button type="button" class="an-jump" data-jump="sec-top10">Top 10 Leaderboards</button>
+      <button type="button" class="an-jump" data-jump="sec-rankings">All 50 States &amp; Takeaways</button>
+      <button type="button" class="an-jump" data-jump="sec-method">Methodology &amp; Sources</button>
     </div>
   </nav>
 
@@ -607,7 +623,7 @@ tr.barfill .an-chancebar i{width:var(--w);}
     <div class="an-wrap">
       <div class="an-intro">
         <p>More Americans are chasing unforgettable night-sky experiences, but every night spent waiting for a meteor is still a gamble. You might catch a fireball blazing across the sky, or spend an hour craning your neck in a dark parking lot only to drive home empty-handed.</p>
-        <p>So, with fireball season heating up and the Perseids set to peak under a moonless August sky, Action Network did what it does best: turned that uncertainty into odds.</p>
+        <p>And this summer&#8217;s slate is stacked. The Delta Aquariids and Alpha Capricornids are already streaking through July skies, and the headliner Perseids peak under a moonless August sky. So Action Network did what it does best: turned that uncertainty into odds.</p>
         <p>Our odds experts calculated each state&#8217;s implied probability and moneyline using six key factors: <strong>dark-sky sites</strong>, <strong>clear days</strong>, <strong>recorded fireball activity</strong>, <strong>observatories</strong>, <strong>DarkSky-certified places</strong> and <strong>elevation</strong>. Think of it as an odds board for the night sky. Is your state a strong pick for a spectacular sighting, or are you taking your chances every time you look up?</p>
       </div>
       <div id="lbShot">
@@ -661,18 +677,20 @@ tr.barfill .an-chancebar i{width:var(--w);}
       <p class="an-lede">Action Network&#8217;s odds experts created each state&#8217;s implied spotting probability and American odds from the six core factors and their weightings; the probability determines the final ranking, and the odds express the same number the sportsbook way. Ten states per page: pick a state on the list to open its full card, with the takeaway, the best viewing site, and all six inputs behind the number.</p>
 
       <div class="an-table-card an-reveal">
+        <div class="an-rktools">
+          <div class="an-search an-search--list">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.8-3.8"></path></svg>
+            <input type="search" id="stateSearch" placeholder="Find your state&hellip;" aria-label="Find your state">
+          </div>
+          <nav class="an-pager" id="tablePager" aria-label="Rankings pages"></nav>
+        </div>
         <div class="an-rksplit">
           <div class="an-rkcol">
-            <div class="an-search an-search--list">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.8-3.8"></path></svg>
-              <input type="search" id="stateSearch" placeholder="Find your state&hellip;" aria-label="Find your state">
-            </div>
             <div class="an-rklist-head" aria-hidden="true"><span>Rank &middot; State</span><span>Implied Prob &middot; AN Odds</span></div>
             <div class="an-rklist" id="rkList"></div>
           </div>
           <div class="an-rkdetail" id="rkDetail" aria-live="polite"></div>
         </div>
-        <nav class="an-pager" id="tablePager" aria-label="Rankings pages"></nav>
       </div>
       <div class="an-disclaimer">These implied spotting probabilities and odds are model-based editorial comparisons created for entertainment. They do not represent an actual market of any kind or guarantee that a meteor, fireball, or meteorite will be seen.</div>
     </div>
@@ -722,16 +740,56 @@ const AN_STATES = [{"rank":1,"state":"California","abbr":"CA","prob":7.34,"odds"
    alt:    optional alt text; defaults to the state's best viewing site
    States without an entry simply show the Best Viewing Site card at full width. */
 const AN_STATE_PHOTOS = {
-  CA: { src: 'https://i.postimg.cc/QCwwDP9L/01-California-Death-Valley-National-Park-16x9.png'  },
-  AZ: { src: 'https://i.postimg.cc/fTxQZzKt/02-Arizona-Grand-Canyon-National-Park-South-Rim-16x9.png'  },
-  UT: { src: 'https://i.postimg.cc/FKHMjjQH/03-Utah-Canyonlands-National-Park-16x9.png'  },
-  TX: { src: 'https://i.postimg.cc/9X7vtmsK/04-Texas-Big-Bend-National-Park-16x9.png'  },
-  CO: { src: 'https://i.postimg.cc/TYjFFkdg/05-Colorado-Dinosaur-National-Monument-16x9.png'  },
-  NM: { src: 'https://i.postimg.cc/8CcYFNhW/06-New-Mexico-Clayton-Lake-State-Park-and-Dinosaur-Trackways-16x9.png'  },
-  OR: { src: 'https://i.postimg.cc/Rh7prFBv/07-Oregon-Bates-State-Park-16x9.png'  },
-  NV: { src: 'https://i.postimg.cc/rpDhVgT2/08-Nevada-Great-Basin-National-Park-16x9.png'  },
-  MI: { src: 'https://i.postimg.cc/br9gCBxv/09-Michigan-Muskallonge-Lake-State-Park-16x9.png'  },
-  OK: { src: 'https://i.postimg.cc/3xcBcpv0/10-Oklahoma-Black-Mesa-State-Park-and-Nature-Preserve-16x9.png'  }
+  CA: { src: 'https://i.postimg.cc/28hNmQYL/01-California-Death-Valley-National-Park-16x9.png'  },
+  AZ: { src: 'https://i.postimg.cc/yN6MF2Zy/02-Arizona-Grand-Canyon-National-Park-South-Rim-16x9.png'  },
+  UT: { src: 'https://i.postimg.cc/bwPcvZY4/03-Utah-Canyonlands-National-Park-16x9.png'  },
+  TX: { src: 'https://i.postimg.cc/wBxChnm2/04-Texas-Big-Bend-National-Park-16x9.png'  },
+  CO: { src: 'https://i.postimg.cc/7LPFgj2s/05-Colorado-Dinosaur-National-Monument-16x9.png'  },
+  NM: { src: 'https://i.postimg.cc/J4ZCmN8y/06-New-Mexico-Clayton-Lake-State-Park-and-Dinosaur-Trackways-16x9.png'  },
+  OR: { src: 'https://i.postimg.cc/W1VL4dbL/07-Oregon-Bates-State-Park-16x9.png'  },
+  NV: { src: 'https://i.postimg.cc/k5M0xLSr/08-Nevada-Great-Basin-National-Park-16x9.png'  },
+  MI: { src: 'https://i.postimg.cc/L8SKsJ6F/09-Michigan-Muskallonge-Lake-State-Park-16x9.png'  },
+  OK: { src: 'https://i.postimg.cc/ZqYGrXNz/10-Oklahoma-Black-Mesa-State-Park-and-Nature-Preserve-16x9.png'  },
+  KS: { src: 'https://i.postimg.cc/Z5mtqWKT/11-Kansas-Cedar-Bluff-State-Park-16x9.png'  },
+  ID: { src: 'https://i.postimg.cc/QdDGMFxx/12-Idaho-Central-Idaho-Dark-Sky-Reserve-16x9.png'  },
+  AK: { src: 'https://i.postimg.cc/x1QDdXTq/13-Alaska-Denali-National-Park-and-Preserve-16x9.png'  },
+  FL: { src: 'https://i.postimg.cc/d0Qb8gCK/14-Florida-Big-Cypress-National-Preserve-16x9.png'  },
+  PA: { src: 'https://i.postimg.cc/T3xMPKYp/15-Pennsylvania-Cherry-Springs-State-Park-16x9.png'  },
+  NC: { src: 'https://i.postimg.cc/2SYR5181/16-North-Carolina-Earth-to-Sky-Park-16x9.png'  },
+  NY: { src: 'https://i.postimg.cc/HsX1Hwm7/17-New-York-Adirondack-Park-near-Tupper-Lake-16x9.png'  },
+  VA: { src: 'https://i.postimg.cc/0NtLZZY4/18-Virginia-James-River-State-Park-16x9.png'  },
+  MN: { src: 'https://i.postimg.cc/xTMVYvQm/19-Minnesota-Judge-CR-Magney-State-Park-16x9.png'  },
+  HI: { src: 'https://i.postimg.cc/52mcQf6t/20-Hawaii-Manuka-State-Wayside-16x9.png'  },
+  WY: { src: 'https://i.postimg.cc/HktG8TVV/21-Wyoming-Yellowstone-National-Park-16x9.png'  },
+  GA: { src: 'https://i.postimg.cc/Njxh2Q5K/22-Georgia-Stephen-C-Foster-State-Park-16x9.png'  },
+  SD: { src: 'https://i.postimg.cc/sD7CyYzT/23-South-Dakota-Black-Hills-National-Forest-16x9.png'  },
+  WA: { src: 'https://i.postimg.cc/15w1PGSd/24-Washington-Mount-Rainier-National-Park-16x9.png'  },
+  MT: { src: 'https://i.postimg.cc/pd0gkkf7/25-Montana-Painted-Rocks-State-Park-16x9.png'  },
+  NE: { src: 'https://i.postimg.cc/02D1xYxg/26-Nebraska-Valentine-National-Wildlife-Refuge-16x9.png'  },
+  IL: { src: 'https://i.postimg.cc/x1PrN9cN/27-Illinois-Middle-Fork-River-Forest-Preserve-16x9.png'  },
+  MO: { src: 'https://i.postimg.cc/Zqf1jj8G/28-Missouri-Current-River-State-Park-16x9.png'  },
+  TN: { src: 'https://i.postimg.cc/ht0FQKf7/29-Tennessee-Obed-Wild-and-Scenic-River-16x9.png'  },
+  MA: { src: 'https://i.postimg.cc/QdqLKjH5/30-Massachusetts-Kenneth-Dubuque-Memorial-State-Forest-16x9.png'  },
+  AR: { src: 'https://i.postimg.cc/tgrLDDdG/31-Arkansas-Cossatot-River-State-Park-Natural-Area-16x9.png'  },
+  WI: { src: 'https://i.postimg.cc/BvhdNN5G/32-Wisconsin-Big-Bay-State-Park-16x9.png'  },
+  IA: { src: 'https://i.postimg.cc/XYgMBnpk/33-Iowa-Nine-Eagles-State-Park-16x9.png'  },
+  SC: { src: 'https://i.postimg.cc/MKVJx7wC/34-South-Carolina-Francis-Marion-National-Forest-16x9.png'  },
+  ME: { src: 'https://i.postimg.cc/q7m9QQcT/35-Maine-Katahdin-Woods-and-Waters-National-Monument-16x9.png'  },
+  AL: { src: 'https://i.postimg.cc/g2K9LGns/36-Alabama-Bladon-Springs-State-Park-16x9.png'  },
+  OH: { src: 'https://i.postimg.cc/RZTrJvNX/37-Ohio-Observatory-Park-16x9.png'  },
+  MD: { src: 'https://i.postimg.cc/Zqf1jjPZ/38-Maryland-Point-Lookout-State-Park-16x9.png'  },
+  MS: { src: 'https://i.postimg.cc/dVFP0hQH/39-Mississippi-Holmes-County-State-Park-16x9.png'  },
+  LA: { src: 'https://i.postimg.cc/9Q25fDXn/40-Louisiana-Tensas-River-National-Wildlife-Refuge-16x9.png'  },
+  IN: { src: 'https://i.postimg.cc/5tPZpp5x/41-Indiana-Shades-State-Park-16x9.png'  },
+  NJ: { src: 'https://i.postimg.cc/5tPZpp54/42-New-Jersey-Belleplain-State-Forest-16x9.png'  },
+  NH: { src: 'https://i.postimg.cc/CKM3j9qj/43-New-Hampshire-Umbagog-Lake-State-Park-16x9.png'  },
+  CT: { src: 'https://i.postimg.cc/bv6KLL0N/44-Connecticut-Macedonia-Brook-State-Park-16x9.png'  },
+  KY: { src: 'https://i.postimg.cc/Lsyrvvk8/45-Kentucky-Buckhorn-Lake-State-Resort-Park-16x9.png'  },
+  WV: { src: 'https://i.postimg.cc/N0NWbb8M/46-West-Virginia-Beartown-State-Park-16x9.png'  },
+  ND: { src: 'https://i.postimg.cc/jjqpzB7H/47-North-Dakota-Beaver-Lake-State-Park-16x9.png'  },
+  RI: { src: 'https://i.postimg.cc/nLd6TTKs/48-Rhode-Island-Beavertail-State-Park-16x9.png'  },
+  DE: { src: 'https://i.postimg.cc/VN73449C/49-Delaware-Delaware-Seashore-State-Park-16x9.png'  },
+  VT: { src: 'https://i.postimg.cc/yN6MF2ZX/50-Vermont-Big-Deer-State-Park-16x9.png'  }
   /* Add more any time: XX: { src: 'https://...', credit: 'Photographer \u00b7 Source', alt: '...' }, */
 };
 
@@ -1211,7 +1269,7 @@ function detailCard(s){
   const photo = (typeof AN_STATE_PHOTOS !== 'undefined' && AN_STATE_PHOTOS[s.abbr] && AN_STATE_PHOTOS[s.abbr].src) ? AN_STATE_PHOTOS[s.abbr] : null;
   const photoCell = photo ? `<figure class="rkd-photo">
         <a class="rkd-photo-link" href="${esc(photo.href || photo.src)}" target="_blank" rel="noopener" aria-label="Open the full-size image in a new tab">
-          <img src="${esc(photo.src)}" alt="${esc(photo.alt || (s.site + ', ' + s.state))}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          <img src="${esc(photo.src)}" alt="${esc(photo.alt || (s.site + ', ' + s.state))}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer">
           <span class="rkd-photo-cta" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-8 8M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-5"/></svg>View full-size image</span>
         </a>
         ${photo.credit ? `<figcaption class="rkd-credit">${esc(photo.credit)}</figcaption>` : ''}
@@ -1337,15 +1395,42 @@ function syncSelection(animate){
 
 function renderPager(){
   if(!pagerEl) return;
-  let html = `<button type="button" class="pg-step" data-step="-1" aria-label="Previous ten states"${currentPage===0?' disabled':''}>&#8249; Prev</button>`;
+  let html = `<button type="button" class="pg-step" data-step="-1" aria-label="Previous ten states"${currentPage===0?' disabled':''}>&#8249;</button>`;
   for(let i=0;i<PAGE_COUNT;i++){
     const a = i*PAGE_SIZE+1, b = Math.min((i+1)*PAGE_SIZE, AN_STATES.length);
     html += `<button type="button" class="pg-num${i===currentPage?' is-active':''}" data-page="${i}" aria-label="Ranks ${a} to ${b}"${i===currentPage?' aria-current="page"':''}>${a}&#8211;${b}</button>`;
   }
-  html += `<button type="button" class="pg-step" data-step="1" aria-label="Next ten states"${currentPage===PAGE_COUNT-1?' disabled':''}>Next &#8250;</button>`;
+  html += `<button type="button" class="pg-step" data-step="1" aria-label="Next ten states"${currentPage===PAGE_COUNT-1?' disabled':''}>&#8250;</button>`;
   pagerEl.innerHTML = html;
 }
 
+/* ---- photo prewarm: once the browser is idle, quietly cache the visible page's photos (two at a time)
+        so switching states feels instant; skips data-saver and 2G connections ---- */
+const anWarmedPhotos = new Set();
+const anIdle = window.requestIdleCallback ? (fn=>requestIdleCallback(fn,{timeout:2500})) : (fn=>setTimeout(fn,800));
+function anPrewarmPage(){
+  try{
+    const c = navigator.connection;
+    if(c && (c.saveData || /(^|-)2g$/.test(c.effectiveType || ''))) return;
+  }catch(e){}
+  if(typeof AN_STATE_PHOTOS === 'undefined') return;
+  const queue = AN_STATES.slice(currentPage*PAGE_SIZE, (currentPage+1)*PAGE_SIZE)
+    .map(s => (AN_STATE_PHOTOS[s.abbr] && AN_STATE_PHOTOS[s.abbr].src) || '')
+    .filter(src => src && !anWarmedPhotos.has(src));
+  let active = 0;
+  (function next(){
+    while(active < 2 && queue.length){
+      const src = queue.shift();
+      anWarmedPhotos.add(src);
+      active++;
+      const im = new Image();
+      im.decoding = 'async';
+      im.referrerPolicy = 'no-referrer';
+      im.onload = im.onerror = function(){ active--; next(); };
+      im.src = src;
+    }
+  })();
+}
 function renderTable(opts){
   const animate = !(opts && opts.animate === false);
   const q = searchBox.value.trim().toLowerCase();
@@ -1373,6 +1458,7 @@ function renderTable(opts){
     }
     rows.forEach(r=>numIO.observe(r));
   });
+  anIdle(anPrewarmPage);
 }
 function goToPage(p){
   const next = Math.max(0, Math.min(PAGE_COUNT-1, p));
