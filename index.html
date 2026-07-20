@@ -1684,11 +1684,14 @@ function anTargetY(el, pad){
 function anJump(el, pad){
   if(!el) return;
   const y = anTargetY(el, pad);
+  /* If this document scrolls internally (standalone page, or a plain iframe like a
+     preview pane), scroll it here with the headroom honored. In the auto-height
+     article embed the document never scrolls internally, so the host page's
+     an_jump handler does the scrolling; no local scrollIntoView, which would land
+     the target flush under the host's fixed nav and race the handler. */
   const scrollsInternally = document.documentElement.scrollHeight > window.innerHeight + 4;
   if(scrollsInternally){
     window.scrollTo({top:y, behavior: prefersReduced ? 'auto' : 'smooth'});
-  } else {
-    el.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
   }
   if(inFrame){
     try { window.parent.postMessage({ an_jump: y }, '*'); } catch(e) {}
