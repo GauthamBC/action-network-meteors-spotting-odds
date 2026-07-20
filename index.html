@@ -1681,17 +1681,31 @@ function anTargetY(el, pad){
   const pageY = window.pageYOffset || document.documentElement.scrollTop || 0;
   return Math.max(0, el.getBoundingClientRect().top + pageY - (pad == null ? 6 : pad));
 }
+/* Scroll helper for the auto-height embed: place an invisible 1px sentinel at the
+   desired document Y and scrollIntoView it. The browser scrolls the host page
+   natively (no host-side handler needed), and because the sentinel sits at
+   target-minus-headroom, the real target lands below the host's fixed nav. */
+let anScrollSentinel = null;
+function anScrollHostTo(y){
+  if(!anScrollSentinel){
+    anScrollSentinel = document.createElement('div');
+    anScrollSentinel.setAttribute('aria-hidden','true');
+    anScrollSentinel.style.cssText = 'position:absolute;left:0;top:0;width:1px;height:1px;margin:0;padding:0;border:0;pointer-events:none;visibility:hidden;';
+    document.body.appendChild(anScrollSentinel);
+  }
+  anScrollSentinel.style.top = Math.max(0, y) + 'px';
+  anScrollSentinel.scrollIntoView({behavior: prefersReduced ? 'auto' : 'smooth', block:'start'});
+}
 function anJump(el, pad){
   if(!el) return;
   const y = anTargetY(el, pad);
-  /* If this document scrolls internally (standalone page, or a plain iframe like a
-     preview pane), scroll it here with the headroom honored. In the auto-height
-     article embed the document never scrolls internally, so the host page's
-     an_jump handler does the scrolling; no local scrollIntoView, which would land
-     the target flush under the host's fixed nav and race the handler. */
   const scrollsInternally = document.documentElement.scrollHeight > window.innerHeight + 4;
   if(scrollsInternally){
+    /* standalone page, or a plain iframe like a preview pane */
     window.scrollTo({top:y, behavior: prefersReduced ? 'auto' : 'smooth'});
+  } else {
+    /* auto-height embed: the host page scrolls, driven from here */
+    anScrollHostTo(y);
   }
   if(inFrame){
     try { window.parent.postMessage({ an_jump: y }, '*'); } catch(e) {}
