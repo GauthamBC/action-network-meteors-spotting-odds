@@ -414,6 +414,25 @@ tr.barfill .an-chancebar i{width:var(--w);}
 .an-rkd.is-exporting .an-take-copy span{font-size:15px;}
 .an-rkd.is-exporting .rkd-site-name{font-size:15.5px;}
 .an-rkd.is-exporting .rkd-chips .chip{font-size:10.5px;padding:4px 9px;}
+/* --- composite state-card export: the state's ranking page beside its full card --- */
+.an-rank-export .an-rkd-export-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:0 0 14px;}
+.an-rank-export .an-rkd-export-head svg{height:24px;width:auto;display:block;}
+.an-rank-export .an-rkd-export-head .ek{display:inline-flex;align-items:center;gap:10px;font-family:var(--an-display);font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--an-green-dark);}
+.an-rank-export .an-rkd-export-head .ek::before{content:"";width:30px;height:2px;background:var(--an-green);}
+.an-rksplit.is-exporting{grid-template-columns:minmax(0,2fr) minmax(0,3fr);align-items:stretch;border:1px solid var(--an-border);}
+.an-rksplit.is-exporting .an-rkd-export-head{display:none;}
+.an-rksplit.is-exporting .an-rkdetail{padding:16px;}
+.an-rksplit.is-exporting .an-rkd.is-exporting{flex:1 1 auto;}
+.an-rksplit.is-exporting .an-rklist-head{padding:10px 14px 10px 15px;font-size:10.5px;letter-spacing:.13em;}
+.an-rksplit.is-exporting .an-rklist-head span:last-child{display:inline;}
+.an-rksplit.is-exporting .an-rkrow{flex-wrap:nowrap;gap:11px;padding:10px 12px 10px 9px;}
+.an-rksplit.is-exporting .an-rkrow .an-rk{min-width:30px;height:30px;font-size:16px;}
+.an-rksplit.is-exporting .rk-name{font-size:15.5px;line-height:1.05;white-space:nowrap;}
+.an-rksplit.is-exporting .rk-bar{display:block;}
+.an-rksplit.is-exporting .rk-caret{display:none;}
+.an-rksplit.is-exporting .rk-nums{flex-direction:column;align-items:flex-end;gap:2px;width:auto;padding-left:0;}
+.an-rksplit.is-exporting .rk-prob{font-size:16.5px;}
+.an-rksplit.is-exporting .rk-odds{font-size:11.5px;}
 .an-rkd-body .an-detail-stats{flex:2 1 auto;align-content:stretch;}
 .an-rkd-body .an-ds{display:flex;flex-direction:column;justify-content:center;}
 .an-rkd-body .an-rkd-site{justify-content:center;}
@@ -628,7 +647,7 @@ tr.barfill .an-chancebar i{width:var(--w);}
       <div class="an-intro">
         <p>More Americans are chasing unforgettable night-sky experiences, but every night spent waiting for a meteor is still a gamble. You might catch a fireball blazing across the sky, or spend an hour craning your neck in a dark parking lot only to drive home empty-handed.</p>
         <p>And this summer&#8217;s slate is stacked. The Delta Aquariids and Alpha Capricornids are already streaking through July skies, and the headliner Perseids peak under a moonless August sky. So Action Network did what it does best: turned that uncertainty into odds.</p>
-        <p>Our odds experts calculated each state&#8217;s implied probability and moneyline using six key factors: <strong>dark-sky zones</strong>, <strong>clear days</strong>, <strong>recorded fireball activity</strong>, <strong>observatories</strong>, <strong>DarkSky-certified places</strong> and <strong>elevation</strong>. Think of it as an odds board for the night sky. Is your state a strong pick for a spectacular sighting, or are you taking your chances every time you look up?</p>
+        <p>Our odds experts calculated each state&#8217;s implied probability and moneyline using six key factors: <strong>Bortle Class 1&#8211;3 zones</strong> (the darkest skies on the scale), <strong>clear days</strong>, <strong>recorded fireball activity</strong>, <strong>observatories</strong>, <strong>DarkSky-certified places</strong>, and <strong>elevation</strong>. Think of it as an odds board for the night sky. Is your state a strong pick for a spectacular sighting, or are you taking your chances every time you look up?</p>
       </div>
       <div id="lbShot">
       <div class="an-lb-export-head" aria-hidden="true">
@@ -1495,14 +1514,23 @@ rkDetail.addEventListener('click', async e=>{
   if(!btn) return;
   const s = RK_BY_ABBR[selAbbr];
   const card = rkDetail.querySelector('.an-rkd');
-  if(!s || !card) return;
+  const split = document.querySelector('.an-rksplit');
+  if(!s || !card || !split) return;
   /* stage a fixed-width clone off-screen: content-driven height and desktop metrics,
-     so the exported PNG looks the same from any device */
+     so the exported PNG looks the same from any device. The export is the full
+     ranking view: this page of the list, the state highlighted, beside its card. */
   const stage = document.createElement('div');
-  stage.style.cssText = 'position:fixed;left:-12000px;top:0;width:1080px;pointer-events:none;';
-  const clone = card.cloneNode(true);
+  stage.style.cssText = 'position:fixed;left:-16000px;top:0;width:1400px;pointer-events:none;';
+  const wrap = document.createElement('div');
+  wrap.className = 'an-rank-export';
+  const headSrc = card.querySelector('.an-rkd-export-head');
+  if(headSrc) wrap.appendChild(headSrc.cloneNode(true));
+  const clone = split.cloneNode(true);
   clone.classList.add('is-exporting');
-  stage.appendChild(clone);
+  const cardClone = clone.querySelector('.an-rkd');
+  if(cardClone) cardClone.classList.add('is-exporting');
+  wrap.appendChild(clone);
+  stage.appendChild(wrap);
   document.body.appendChild(stage);
   try{
     const img = clone.querySelector('.rkd-photo img');
@@ -1517,10 +1545,10 @@ rkDetail.addEventListener('click', async e=>{
         try{ await img.decode(); }catch(_){}
       }catch(err){
         console.warn('[AN] photo could not be embedded in the export; exporting without it:', err);
-        clone.classList.add('no-export-photo');
+        if(cardClone) cardClone.classList.add('no-export-photo');
       }
     }
-    await anDownloadPng(clone, btn,
+    await anDownloadPng(wrap, btn,
       'meteor-index-' + s.state.toLowerCase().replace(/[^a-z]+/g, '-') + '-card.png',
       ['an-rkd-dl'], {x: 30, y: 28});
   } finally {
