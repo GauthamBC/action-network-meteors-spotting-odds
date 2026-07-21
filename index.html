@@ -569,6 +569,9 @@ tr.barfill .an-chancebar i{width:var(--w);}
   .mtd-row .m-pct{font-size:14.5px;}
 }
 .an-mtd-src{font-size:14.5px;line-height:1.75;color:#4a545b;margin:0;}
+.an-mtd-data{margin-top:10px;}
+.an-mtd-src a{color:var(--an-green-dark);font-weight:600;text-decoration:none;border-bottom:2px solid var(--an-green);transition:color .15s ease,border-color .15s ease;}
+.an-mtd-src a:hover{color:var(--an-green);border-bottom-color:var(--an-green-bright);}
 .an-mtd-src strong{color:var(--an-navy);}
 
 /* reveal */
@@ -734,7 +737,7 @@ tr.barfill .an-chancebar i{width:var(--w);}
     <div class="an-wrap">
       <span class="an-sec-kicker">How the Index Works</span>
       <h2 class="an-h2" style="margin-top:8px;">Methodology &amp; Sources</h2>
-      <p class="an-lede">Action Network&#8217;s odds experts created each state&#8217;s implied spotting probability and American moneyline odds from the six core factors below and their weightings. Each factor was rescaled using min&#8211;max normalization, a standard method that puts every metric on the same 0&#8211;1 scale, and the probability determines the final ranking.</p>
+      <p class="an-lede">Action Network&#8217;s odds experts created each state&#8217;s implied spotting probability and American moneyline odds from the six core factors below and their weightings.</p>
       <div class="an-mtd" id="mtdBody" aria-label="The six factors and their weightings">
         <div class="mtd-row"><span class="m-name">Bortle Class 1&#8211;3 dark-sky zones</span><span class="mtd-track"><i class="mtd-fill" style="--w:100%"></i></span><span class="m-pct">30%</span></div>
         <div class="mtd-row"><span class="m-name">Annual clear days</span><span class="mtd-track"><i class="mtd-fill" style="--w:83.3%;transition-delay:.06s"></i></span><span class="m-pct">25%</span></div>
@@ -744,6 +747,7 @@ tr.barfill .an-chancebar i{width:var(--w);}
         <div class="mtd-row"><span class="m-name">Average elevation</span><span class="mtd-track"><i class="mtd-fill" style="--w:16.7%;transition-delay:.3s"></i></span><span class="m-pct">5%</span></div>
       </div>
       <p class="an-mtd-src"><strong>Sources &amp; notes:</strong> Dark-sky zones and Bortle classes: Go-Astronomy site lists (Bortle class reflects location potential; actual conditions vary with weather, smoke, and humidity). Clear days: NOAA NCEI comparative climatic data, daylight-hour cloud cover, and state means across listed stations. Fireball events: American Meteor Society unique state-event pairs, 2021&#8211;2025. Observatories: Go-Astronomy state pages. Certified places: DarkSky U.S. places list. Elevation: validated state mean elevations. Meteorite history: NASA meteorite landings archive, witnessed falls. Published as The 2026 Meteor Spotting Index.</p>
+      <p class="an-mtd-src an-mtd-data"><strong>Full data:</strong> The complete dataset behind the index, with the full ranking, raw data, methodology, and sources, is available here: <a href="https://docs.google.com/spreadsheets/d/1QY2CieGihCs9-HqoCIURsZR_4ujgXYr_5eE-QtFK9js/edit?gid=1315118856#gid=1315118856" target="_blank" rel="noopener">Action Network Meteor Spotting Odds [Data]</a>.</p>
     </div>
   </section>
 
